@@ -11,22 +11,32 @@
         <!-- encabezado y navegacion -->
             <header class="bg-orange-600 text-white shadow-md">
                 <!-- Arriba a la izquierda: Logo + Nombre de la empresa -->
-                <div class="flex items-center space-x-3">
-                    <img src="https://cdn-icons-png.flaticon.com/512/491/491214.png" alt="Logo Gas El Volcán" class="h-10 w-auto object-contain bg-white rounded-full p-1" />
-                    <span class="text-xl font-bold tracking-wide">Gas El Volcán</span>
-                </div>
-                <!--Menu de navegacion-->
-                <nav class="hidden md:flex space-x-6 justify-center">
-                    <a href="index.html" class="hover:text-blue-200 transition">Inicio</a>
-                    <a href="nosotros.html"class="hover:text-blue-200 transition">Nosotros</a>
-                    <a href="contacto.html" class="hover:text-blue-200 transition" >Contacto</a>
-                </nav>
+                <!-- CONTENEDOR PADRE: flex, items-center (alinea vertical) y justify-between (separa los 3 bloques) -->
+                <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                    
+                    <!-- 1. BLOQUE IZQUIERDO: Logo y Nombre -->
+                    <div class="flex items-center space-x-2">
+                        <!-- Reemplaza con tu img del volcán -->
+                        <div class="bg-white rounded-full h-10 w-10 flex items-center justify-center">🌋</div>
+                        <span class="text-xl font-bold text-white">Gas El Volcán</span>
+                    </div>
 
-                <div class="flex items-center justify-end space-x-4 ml-auto">
-                    <a href="login.html" class="font-medium hover:text-blue-500 transition" >Iniciar Sesion</a>
-                    <button class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow">
-                        <span>🛒(0)</span>
-                    </button>
+                    <!-- 2. BLOQUE CENTRAL: Navegación -->
+                    <!-- Agregué items-center aquí para asegurar que los enlaces no floten arriba -->
+                    <nav class="hidden md:flex items-center space-x-6 text-white font-medium">
+                        <a href="index.html" class="hover:text-blue-200 transition">Inicio</a>
+                        <a href="nosotros.html" class="hover:text-blue-200 transition">Nosotros</a>
+                        <a href="contacto.html" class="hover:text-blue-200 transition">Contacto</a>
+                    </nav>
+
+                    <!-- 3. BLOQUE DERECHO: Login y Carrito -->
+                    <!-- Le quité el ml-auto porque el justify-between del padre ya lo empuja a la derecha -->
+                    <div class="flex items-center space-x-4 text-white">
+                        <a href="login.html" class="font-medium hover:text-blue-200 transition">Iniciar Sesion</a>
+                        <button class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow">
+                            <span>🛒 (0)</span>
+                        </button>
+                    </div>
                 </div>
             </header>
             <!--Contenido principal-->
