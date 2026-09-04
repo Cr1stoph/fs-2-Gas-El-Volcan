@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas El Volcán - Sobre Nosotros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./assets/js/script.js" defer></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header y Navegación -->
+    <header class="bg-orange-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="bg-white rounded-full h-10 w-10 flex items-center justify-center text-xl shadow-sm">🌋</div>
+                <span class="text-xl font-bold text-white">Gas El Volcán</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-6 text-white font-medium">
+                <a href="index.html" class="hover:text-orange-200 transition">Inicio</a>
+                <a href="productos.html" class="hover:text-orange-200 transition">Productos</a>
+                <a href="nosotros.html" class="underline decoration-2 underline-offset-4 font-bold text-orange-100">Nosotros</a>
+                <a href="contacto.html" class="hover:text-orange-200 transition">Contacto</a>
+            </nav>
+
+            <div class="flex items-center space-x-4 text-white">
+                <a href="login.html" class="font-medium hover:text-orange-200 transition">Iniciar Sesión</a>
+                <a href="carrito.html" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow flex items-center space-x-1">
+                    <span>🛒</span>
+                    <span id="cart-counter">(0)</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow">
+        <!-- secciones -->
+         <!-- Hero Section -->
+        <section class="bg-orange-500 text-white py-12 px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-3xl md:text-4xl font-extrabold mb-3">Nuestra Historia y Compromiso</h1>
+                <p class="text-lg opacity-90">Llevamos la calidez del gas licuado a cada rincón de Chillán con rapidez, confianza y seguridad.</p>
+            </div>
+        </section>
+
+        <!-- Historia de la Empresa -->
+        <section class="container mx-auto px-4 py-12 max-w-5xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-orange-600 pl-3">¿Quiénes Somos?</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        <strong>Gas El Volcán</strong> nació en la ciudad de Chillán como un emprendimiento familiar con la misión de transformar la distribución de gas licuado en la Región del Ñuble.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Nos diferenciamos por nuestro servicio de despacho ágil y la modernización de los procesos de entrega, permitiendo a nuestros vecinos solicitar cilindros de 5kg, 11kg y 15kg directamente a su puerta con seguimiento transparente.
+                    </p>
+                </div>
+                <div class="overflow-hidden rounded-2xl shadow-lg border border-gray-200">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80" alt="Planta de distribución y logística de gas" class="w-full h-64 object-cover hover:scale-105 transition duration-300">
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Misión y Visión -->
+        <section class="bg-white py-12 border-y border-gray-200">
+            <div class="container mx-auto px-4 max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="p-6 bg-orange-50 rounded-xl border border-orange-100">
+                    <div class="text-3xl mb-3">🎯</div>
+                    <h3 class="text-xl font-bold text-orange-900 mb-2">Nuestra Misión</h3>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Proveer energía limpia y accesible para hogares y comercios de Chillán, asegurando estándares rigurosos de seguridad y puntualidad en cada entrega.
+                    </p>
+                </div>
+
+                <div class="p-6 bg-orange-50 rounded-xl border border-orange-100">
+                    <div class="text-3xl mb-3">🚀</div>
+                    <h3 class="text-xl font-bold text-orange-900 mb-2">Nuestra Visión</h3>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Ser la distribuidora líder de gas licuado en la región, reconocida por nuestra innovación tecnológica, atención al cliente de excelencia y compromiso con la comunidad.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <!-- Galería de la Empresa -->
+        <section class="container mx-auto px-4 py-12 max-w-5xl">
+            <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">Nuestras Instalaciones y Equipo</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=500&q=80" alt="Flota de repartidores" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-bold text-gray-800 text-sm">Flota de Despacho</h4>
+                        <p class="text-xs text-gray-500 mt-1">Vehículos autorizados preparados para reparto rápido.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=500&q=80" alt="Inspección de calidad" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-bold text-gray-800 text-sm">Seguridad Garantizada</h4>
+                        <p class="text-xs text-gray-500 mt-1">Inspección periódica de todos nuestros cilindros.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=500&q=80" alt="Atención al cliente" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-bold text-gray-800 text-sm">Atención Personalizada</h4>
+                        <p class="text-xs text-gray-500 mt-1">Equipo humano enfocado en resolver tus dudas.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-sm border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2026 Distribuidora de gas El Volcán. Todos los derechos reservados.</p>
+            <p class="text-xs text-orange-400 mt-1">Proyecto Informática / Duoc UC</p>
+        </div>
+    </footer>
+
+</body>
+</html>
