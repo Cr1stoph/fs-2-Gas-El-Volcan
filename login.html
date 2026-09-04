@@ -3,42 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesion</title>
+    <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
-    <header>
-        <h1>Iniciar Sesion</h1>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-orange-600 text-white shadow-md py-4">
+        <h1 class="text-xl font-bold text-center">Inicio de Sesión</h1>
     </header>
 
-    <main>
-        <section>
-        <h2>Bienvenido</h2>
-        <p>Ingresa tus datos para acceder a tu cuenta.</p>
+    <main class="flex-grow flex items-center justify-center px-4">
+        <section class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
 
-        <form id="form-login">
-            <div>
-                <label for="correo">Correo Electronico:</label>
-                <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo" autocomplete="email" required>
+            <!-- Bienvenida centrada -->
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold mb-2">Bienvenido</h2>
+                <p class="text-gray-600">Ingresa tus datos para acceder a tu cuenta.</p>
             </div>
 
-            <div>
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+            <!-- Formulario -->
+            <form id="form-login" class="space-y-4">
+
+                <div>
+                    <label for="correo" class="block text-left text-gray-700 font-medium mb-1">
+                        Correo Electrónico:
+                    </label>
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        placeholder="Ingresa tu correo"
+                        autocomplete="email"
+                        required
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    >
+                </div>
+
+                <div>
+                    <label for="contrasena" class="block text-left text-gray-700 font-medium mb-1">
+                        Contraseña:
+                    </label>
+                    <input
+                        type="password"
+                        id="contrasena"
+                        name="contrasena"
+                        placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password"
+                        required
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <!-- Links -->
+            <div class="text-center mt-6 space-y-2">
+                <p>¿No tienes una cuenta?
+                    <a href="registro.html" class="text-orange-600 hover:underline">Regístrate aquí</a>
+                </p>
+                <p>
+                    <a href="index.html" class="text-orange-600 hover:underline">Volver a la página principal</a>
+                </p>
             </div>
 
-            <button type="submit">Submit</button>
-        </form>
-            
-            <p>¿No tienes una cuenta? <a href="registro.html">Registrate aquí</a></p>
-
-            <p><a href="index.html">Volver a la página principal</a></p>
         </section>
     </main>
 
-    <footer>
-    </footer>
+    <footer></footer>
 </body>
-
 </html>
