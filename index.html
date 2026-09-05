@@ -5,6 +5,7 @@
         <title>Gas El volcán - Distribuidora</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <link rel="stylesheet" href="./assets/css/style.css">
+        <script src="./assets/js/script.js" defer></script>
     </head>
     
     <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
@@ -14,14 +15,10 @@
             <!-- Arriba a la izquierda: Logo + Nombre de la empresa -->
             <!-- CONTENEDOR PADRE: flex, items-center (alinea vertical) y justify-between (separa los 3 bloques) -->
             <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-                
-                <!-- 1. BLOQUE IZQUIERDO: Logo y Nombre -->
-                <div class="flex items-center space-x-2">
-                    <!-- Reemplaza con tu img del volcán -->
-                    <div class="bg-white rounded-full h-10 w-10 flex items-center justify-center">🌋</div>
+                <a href="index.html" class="flex items-center" >
+                    <div class="bg-white rounded-full h-10 w-10 flex items-center justify-center text-xl shadow-sm">🌋</div>
                     <span class="text-xl font-bold text-white">Gas El Volcán</span>
-                </div>
-
+                </a>
                 <!-- 2. BLOQUE CENTRAL: Navegación -->
                 <!-- Agregué items-center aquí para asegurar que los enlaces no floten arriba -->
                 <nav class="hidden md:flex items-center space-x-6 text-white font-medium">
@@ -29,30 +26,27 @@
                     <a href="nosotros.html" class="hover:text-blue-200 transition">Nosotros</a>
                     <a href="contacto.html" class="hover:text-blue-200 transition">Contacto</a>
                 </nav>
-
                 <!-- 3. BLOQUE DERECHO: Login y Carrito -->
                 <!-- Le quité el ml-auto porque el justify-between del padre ya lo empuja a la derecha -->
                 <div class="flex items-center space-x-4 text-white">
-                    <a href="login.html" class="font-medium hover:text-blue-200 transition">Iniciar Sesion</a>
+                    <a href="login.html" class="font-medium hover:text-blue-200 transition">Iniciar Sesión</a>
                     <a href="carrito.html" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow flex items-center space-x-1 transition" > 
                         <span>🛒</span>
-                        <span>Carrito (0)</span>
-                        </a>
-                    </button>
+                        <span id="cart-counter">(0)</span>
+                    </a>
                 </div>
             </div>
         </header>
-        
+
         <!--Contenido principal-->
         <main>
             <section>
-                <h1>Gas licuado a domicilio en Chillan</h1> <!--Colocar tilde-->
+                <h1>Gas licuado a domicilio en Chillán</h1>
                 <p>Pide tu cilindro de gas de manera rapida, facil y sigue tu entrega en tiempo real.</p>
                 <a href="productos.html">Ver productos</a>
             </section>
             
             <!--Seccion destacada El mas vendido-->
-            <!-- Sección Destacada: Los más vendidos (Grilla de 3 columnas) -->
             <section>
                 <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">Nuestros Cilindros</h2>
                 
@@ -66,7 +60,7 @@
                             <p class="text-gray-500 mb-4 text-sm">Práctico y liviano, ideal para estufas pequeñas o quinchos.</p>
                             <p class="text-2xl font-black text-orange-600 mb-6">$10.000</p>
                         </div>
-                        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
+                        <button data-id="1" data-nombre="Cilindro 5 kg" data-precio="10000" data-img="./assets/img/cilindro-5kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
                             Añadir al carrito
                         </button>
                     </article>
@@ -81,7 +75,7 @@
                             <p class="text-gray-500 mb-4 text-sm">Ideal para estufas y cocinas por su duración y tamaño.</p>
                             <p class="text-2xl font-black text-orange-600 mb-6">$15.500</p>
                         </div>
-                        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
+                        <button data-id="2" data-nombre="Cilindro 11 kg" data-precio="15500" data-img="./assets/img/cilindro-11kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
                             Añadir al carrito
                         </button>
                     </article>
@@ -94,7 +88,7 @@
                             <p class="text-gray-500 mb-4 text-sm">Máxima capacidad para calefonts y alto consumo familiar.</p>
                             <p class="text-2xl font-black text-orange-600 mb-6">$21.000</p>
                         </div>
-                        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
+                        <button data-id="3" data-nombre="Cilindro 15 kg" data-precio="21000" data-img="./assets/img/cilindro-15kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
                             Añadir al carrito
                         </button>
                     </article>
