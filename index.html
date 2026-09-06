@@ -54,35 +54,45 @@
                 <a href="#productos" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition shadow-lg text-lg">Ver productos</a>
             </section>
             
-            <!-- Sección de productos -->
-            <section id="productos" class="py-6">
+            <!-- Sección de Productos -->
+            <section id="productos" class="py-12">
                 <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">Nuestros Cilindros</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     
                     <!-- Producto 1: 5kg -->
                     <article class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition">
                         <div>
-                            <img src="./assets/img/cilindro-5kg.png" alt="Cilindro de 5kg" class="w-full h-48 object-contain mb-4">
+                            <div class="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100">
+                                <img src="./assets/img/cilindro-5kg.png" 
+                                    onerror="this.onerror=null; this.src='https://placehold.co/300x300/ffedd5/ea580c?text=Cilindro+5kg';" 
+                                    alt="Cilindro de 5kg" 
+                                    class="w-full h-full object-contain p-4 hover:scale-105 transition duration-300">
+                            </div>
                             <h3 class="text-xl font-bold mb-2 text-gray-800">Cilindro 5 kg</h3>
                             <p class="text-gray-500 mb-4 text-sm">Práctico y liviano, ideal para estufas pequeñas o quinchos.</p>
                             <p class="text-2xl font-black text-orange-600 mb-6">$10.000</p>
                         </div>
-                        <button data-id="1" data-nombre="Cilindro 5 kg" data-precio="10000" data-img="./assets/img/cilindro-5kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
+                        <button data-id="1" data-nombre="Cilindro 5 kg" data-precio="10000" data-img="./assets/img/cilindro-5kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
                             Añadir al carrito
                         </button>
                     </article>
                     
                     <!-- Producto 2: 11kg -->
                     <article class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition relative">
-                        <span class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl uppercase">Más vendido</span>
+                        <span class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl uppercase z-10">Más vendido</span>
                         <div>
-                            <img src="./assets/img/cilindro-11kg.png" alt="Cilindro de 11kg" class="w-full h-48 object-contain mb-4">
+                            <div class="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100">
+                                <img src="./assets/img/cilindro-11kg.png" 
+                                    onerror="this.onerror=null; this.src='https://placehold.co/300x300/ffedd5/ea580c?text=Cilindro+11kg';" 
+                                    alt="Cilindro de 11kg" 
+                                    class="w-full h-full object-contain p-4 hover:scale-105 transition duration-300">
+                            </div>
                             <h3 class="text-xl font-bold mb-2 text-gray-800">Cilindro 11 kg</h3>
                             <p class="text-gray-500 mb-4 text-sm">Ideal para estufas y cocinas por su duración y tamaño.</p>
                             <p class="text-2xl font-black text-orange-600 mb-6">$15.500</p>
                         </div>
-                        <button data-id="2" data-nombre="Cilindro 11 kg" data-precio="15500" data-img="./assets/img/cilindro-11kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
+                        <button data-id="2" data-nombre="Cilindro 11 kg" data-precio="15500" data-img="./assets/img/cilindro-11kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
                             Añadir al carrito
                         </button>
                     </article>
@@ -90,12 +100,17 @@
                     <!-- Producto 3: 15kg -->
                     <article class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition">
                         <div>
-                            <img src="./assets/img/cilindro-15kg.png" alt="Cilindro de 15kg" class="w-full h-48 object-contain mb-4">
+                            <div class="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100">
+                                <img src="./assets/img/cilindro-15kg.png" 
+                                    onerror="this.onerror=null; this.src='https://placehold.co/300x300/ffedd5/ea580c?text=Cilindro+15kg';" 
+                                    alt="Cilindro de 15kg" 
+                                    class="w-full h-full object-contain p-4 hover:scale-105 transition duration-300">
+                            </div>
                             <h3 class="text-xl font-bold mb-2 text-gray-800">Cilindro 15 kg</h3>
                             <p class="text-gray-500 mb-4 text-sm">Máxima capacidad para calefonts y alto consumo familiar.</p>
                             <p class="text-2xl font-black text-orange-600 mb-6">$21.000</p>
                         </div>
-                        <button data-id="3" data-nombre="Cilindro 15 kg" data-precio="21000" data-img="./assets/img/cilindro-15kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-full transition">
+                        <button data-id="3" data-nombre="Cilindro 15 kg" data-precio="21000" data-img="./assets/img/cilindro-15kg.png" class="btn-add-cart bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
                             Añadir al carrito
                         </button>
                     </article>
