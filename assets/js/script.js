@@ -131,3 +131,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Control del menú hamburguesa móvil
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuBtn && mobileMenu) {
+        // Toggle para mostrar/ocultar menú
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Ocultar menú al hacer clic en cualquier enlace (útil para la ancla #contacto)
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    }
+});
