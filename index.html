@@ -48,20 +48,23 @@
         <!-- Contenido principal -->
         <main class="flex-grow container mx-auto px-4">
             
-            <!-- Hero section con imagen temática de volcán -->
-            <section class="my-8 rounded-3xl overflow-hidden relative shadow-xl bg-gray-900 text-white min-h-[320px] flex items-center">
+            <!-- Hero section perfectamente centrado -->
+            <section class="my-8 rounded-3xl overflow-hidden relative shadow-2xl bg-gray-900 text-white min-h-[380px] flex items-center justify-center text-center">
+                <!-- Capa oscura de superposición para mejorar contraste -->
+                <div class="absolute inset-0 bg-black/50 z-10"></div>
+                
                 <img src="https://images.unsplash.com/photo-1541845157-a6d2d100c931?auto=format&fit=crop&w=1350&q=80" 
                      alt="Fondo de volcán" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-35">
+                     class="absolute inset-0 w-full h-full object-cover">
                 
-                <div class="relative z-10 p-8 md:p-12 text-center md:text-left max-w-2xl">
-                    <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block shadow">
+                <div class="relative z-20 p-6 md:p-12 max-w-3xl mx-auto flex flex-col items-center justify-center">
+                    <span class="bg-orange-500 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 shadow-md">
                         Energía y Calor Directo
                     </span>
                     <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">
                         Gas licuado a domicilio en Chillán
                     </h1>
-                    <p class="text-base md:text-lg text-gray-200">
+                    <p class="text-base md:text-lg text-gray-200 max-w-xl">
                         La fuerza volcánica en tu hogar. Pide tu cilindro de manera rápida, fácil y sigue tu entrega en tiempo real.
                     </p>
                 </div>
@@ -78,9 +81,9 @@
                         <div>
                             <div class="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
                                 <img src="./assets/img/cilindro-5kg.png" 
-                                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=500&q=80';" 
+                                     onerror="this.onerror=null; this.src='https://placehold.co/400x400/ffedd5/ea580c?text=Cilindro+5kg';" 
                                      alt="Cilindro de 5kg" 
-                                     class="w-full h-full object-cover rounded-lg hover:scale-105 transition duration-300">
+                                     class="w-full h-full object-contain hover:scale-105 transition duration-300">
                             </div>
                             <h3 class="text-xl font-bold mb-2 text-gray-800">Cilindro 5 kg</h3>
                             <p class="text-gray-500 mb-4 text-sm">Práctico y liviano, ideal para estufas pequeñas o quinchos.</p>
@@ -97,9 +100,9 @@
                         <div>
                             <div class="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
                                 <img src="./assets/img/cilindro-11kg.png" 
-                                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=500&q=80';" 
+                                     onerror="this.onerror=null; this.src='https://placehold.co/400x400/ffedd5/ea580c?text=Cilindro+11kg';" 
                                      alt="Cilindro de 11kg" 
-                                     class="w-full h-full object-cover rounded-lg hover:scale-105 transition duration-300">
+                                     class="w-full h-full object-contain hover:scale-105 transition duration-300">
                             </div>
                             <h3 class="text-xl font-bold mb-2 text-gray-800">Cilindro 11 kg</h3>
                             <p class="text-gray-500 mb-4 text-sm">Ideal para estufas y cocinas por su duración y tamaño.</p>
@@ -115,9 +118,9 @@
                         <div>
                             <div class="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
                                 <img src="./assets/img/cilindro-15kg.png" 
-                                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1619266465172-02a857c3556d?auto=format&fit=crop&w=500&q=80';" 
+                                     onerror="this.onerror=null; this.src='https://placehold.co/400x400/ffedd5/ea580c?text=Cilindro+15kg';" 
                                      alt="Cilindro de 15kg" 
-                                     class="w-full h-full object-cover rounded-lg hover:scale-105 transition duration-300">
+                                     class="w-full h-full object-contain hover:scale-105 transition duration-300">
                             </div>
                             <h3 class="text-xl font-bold mb-2 text-gray-800">Cilindro 15 kg</h3>
                             <p class="text-gray-500 mb-4 text-sm">Máxima capacidad para calefonts y alto consumo familiar.</p>
