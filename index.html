@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
     <head>
         <meta charset="UTF-8">
         <title>Gas El volcán - Distribuidora</title>
@@ -10,27 +10,23 @@
     
     <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
         
-        <!-- encabezado y navegacion -->
-        <header class="bg-orange-600 text-white shadow-md">
-            <!-- Arriba a la izquierda: Logo + Nombre de la empresa -->
-            <!-- CONTENEDOR PADRE: flex, items-center (alinea vertical) y justify-between (separa los 3 bloques) -->
+        <!-- Encabezado y navegación -->
+        <header class="bg-orange-600 text-white shadow-md sticky top-0 z-50">
             <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-                <a href="index.html" class="flex items-center" >
+                <a href="index.html" class="flex items-center space-x-2">
                     <div class="bg-white rounded-full h-10 w-10 flex items-center justify-center text-xl shadow-sm">🌋</div>
                     <span class="text-xl font-bold text-white">Gas El Volcán</span>
                 </a>
-                <!-- 2. BLOQUE CENTRAL: Navegación -->
-                <!-- Agregué items-center aquí para asegurar que los enlaces no floten arriba -->
+                
                 <nav class="hidden md:flex items-center space-x-6 text-white font-medium">
                     <a href="index.html" class="hover:text-blue-200 transition">Inicio</a>
                     <a href="nosotros.html" class="hover:text-blue-200 transition">Nosotros</a>
-                    <a href="contacto.html" class="hover:text-blue-200 transition">Contacto</a>
+                    <a href="#contacto" class="hover:text-blue-200 transition">Contacto</a>
                 </nav>
-                <!-- 3. BLOQUE DERECHO: Login y Carrito -->
-                <!-- Le quité el ml-auto porque el justify-between del padre ya lo empuja a la derecha -->
+                
                 <div class="flex items-center space-x-4 text-white">
                     <a href="login.html" class="font-medium hover:text-blue-200 transition">Iniciar Sesión</a>
-                    <a href="carrito.html" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow flex items-center space-x-1 transition" > 
+                    <a href="carrito.html" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow flex items-center space-x-1 transition"> 
                         <span>🛒</span>
                         <span id="cart-counter">(0)</span>
                     </a>
@@ -38,16 +34,18 @@
             </div>
         </header>
 
-        <!--Contenido principal-->
-        <main>
+        <!-- Contenido principal -->
+        <main class="flex-grow container mx-auto px-4">
+            
+            <!-- Hero section -->
             <section class="text-center py-12">
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">Gas licuado a domicilio en Chillán</h1>
-                <p class="text-lg text-gray-600 mb-8">Pide tu cilindro de gas de manera rapida, facil y sigue tu entrega en tiempo real.</p>
+                <p class="text-lg text-gray-600 mb-8">Pide tu cilindro de gas de manera rápida, fácil y sigue tu entrega en tiempo real.</p>
                 <a href="#productos" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition shadow-lg text-lg">Ver productos</a>
             </section>
             
-            <!--Seccion destacada El mas vendido-->
-            <section id="productos">
+            <!-- Sección de productos -->
+            <section id="productos" class="py-6">
                 <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">Nuestros Cilindros</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -67,7 +65,6 @@
                     
                     <!-- Producto 2: 11kg -->
                     <article class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition relative">
-                        <!-- Etiqueta de "Más vendido" -->
                         <span class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl uppercase">Más vendido</span>
                         <div>
                             <img src="./assets/img/cilindro-11kg.png" alt="Cilindro de 11kg" class="w-full h-48 object-contain mb-4">
@@ -95,10 +92,71 @@
                     
                 </div>
             </section>
+
+            <!-- Sección de Contacto -->
+            <section id="contacto" class="py-16 border-t border-gray-200 mt-12">
+                <div class="max-w-3xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-3">Formulario de Contacto</h2>
+                        <p class="text-gray-600">¿Tienes dudas o necesitas ayuda? Déjanos tu mensaje y la administradora se pondrá en contacto contigo.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+                        <form id="contact-form" action="#" method="POST" class="space-y-6">
+                            
+                            <!-- Nombre Completo -->
+                            <div>
+                                <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required 
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+                            </div>
+
+                            <!-- Correo y Teléfono -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico</label>
+                                    <input type="email" id="email" name="email" placeholder="ejemplo@correo.cl" required 
+                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+                                </div>
+                                <div>
+                                    <label for="telefono" class="block text-sm font-semibold text-gray-700 mb-2">Teléfono de contacto</label>
+                                    <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" required 
+                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+                                </div>
+                            </div>
+
+                            <!-- Asunto -->
+                            <div>
+                                <label for="asunto" class="block text-sm font-semibold text-gray-700 mb-2">Motivo de contacto</label>
+                                <select id="asunto" name="asunto" required 
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition bg-white">
+                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    <option value="consulta">Consulta general</option>
+                                    <option value="pedido">Estado de mi pedido</option>
+                                    <option value="reclamo">Reclamo o sugerencia</option>
+                                    <option value="otro">Otro motivo</option>
+                                </select>
+                            </div>
+
+                            <!-- Mensaje -->
+                            <div>
+                                <label for="mensaje" class="block text-sm font-semibold text-gray-700 mb-2">Mensaje</label>
+                                <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe aquí tu consulta detallada..." required 
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"></textarea>
+                            </div>
+
+                            <!-- Botón de Envío -->
+                            <button type="submit" 
+                                class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md hover:shadow-lg text-lg">
+                                Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </main>
         
-        <!--Pie de pagina-->
-<!-- Pie de Página -->
+        <!-- Pie de página -->
         <footer class="bg-gray-900 text-gray-400 py-6 text-center text-sm border-t border-gray-800 mt-auto">
             <div class="container mx-auto px-4">
                 <p>&copy; 2026 Distribuidora de gas El Volcán. Todos los derechos reservados.</p>
