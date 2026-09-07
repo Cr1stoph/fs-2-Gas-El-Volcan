@@ -40,11 +40,11 @@ function cargarCarritoDesdeURL() {
 
 function irAlCarrito() {
     if (cart.length === 0) {
-        alert("Tu carrito está vacío. Agrega un producto primero.");
-        return;
+        window.location.href = 'carrito.html';
+    } else {
+        const cartString = cart.map(item => `${item.id}:${item.cantidad}`).join(',');
+        window.location.href = `carrito.html?cart=${encodeURIComponent(cartString)}`;
     }
-    const cartString = cart.map(item => `${item.id}:${item.cantidad}`).join(',');
-    window.location.href = `carrito.html?cart=${encodeURIComponent(cartString)}`;
 }
 
 // ==========================================
