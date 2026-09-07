@@ -12,20 +12,30 @@
     <!-- Encabezado y navegación -->
     <header style="background-color: #ea580c; color: white; padding: 12px 16px; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            
+            <!-- Logo -->
             <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: white; font-weight: bold; font-size: 1.25rem;">
                 <span style="background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">🌋</span>
                 <span>Gas El Volcán</span>
             </a>
 
-            <button onclick="let m = document.getElementById('menu-login'); m.style.display = (m.style.display === 'block') ? 'none' : 'block';" 
-                    type="button"
-                    style="background: #c2410c; border: none; color: white; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+            <!-- Botonera: Carrito + Hamburguesa -->
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <a href="#" id="btn-ir-carrito" style="background: #c2410c; color: white; text-decoration: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; gap: 6px; font-size: 0.9rem;">
+                    🛒 <span id="cart-counter">(0)</span>
+                </a>
+
+                <button onclick="let m = document.getElementById('menu-login'); m.style.display = (m.style.display === 'block') ? 'none' : 'block';" 
+                        type="button"
+                        style="background: #c2410c; border: none; color: white; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
+        <!-- Menú Desplegable -->
         <div id="menu-login" style="display: none; background-color: #9a3412; margin-top: 12px; padding: 8px; border-radius: 8px;">
             <a href="index.html" style="display: block; color: white; text-decoration: none; padding: 10px 12px; font-weight: bold; border-bottom: 1px solid #c2410c;">🏠 Volver al Inicio</a>
             <a href="nosotros.html" style="display: block; color: white; text-decoration: none; padding: 10px 12px; font-weight: bold; border-bottom: 1px solid #c2410c;">👥 Nosotros</a>

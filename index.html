@@ -19,14 +19,24 @@
                     <span>Gas El Volcán</span>
                 </a>
 
-                <!-- Botón Hamburguesa VISIBLE EN TODAS LAS PANTALLAS -->
-                <button onclick="let m = document.getElementById('menu-tienda'); m.style.display = (m.style.display === 'block') ? 'none' : 'block';" 
-                        type="button"
-                        style="background: #c2410c; border: none; color: white; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                    <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <!-- Contenedor alineado: Botón Carrito + Botón Hamburguesa -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    
+                    <!-- AQUÍ VA EL BOTÓN DEL CARRITO -->
+                    <a href="#" id="btn-ir-carrito" style="background: #c2410c; color: white; text-decoration: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; gap: 6px; font-size: 0.9rem;">
+                        🛒 <span id="cart-counter">(0)</span>
+                    </a>
+
+                    <!-- Botón Hamburguesa -->
+                    <button onclick="let m = document.getElementById('menu-tienda'); m.style.display = (m.style.display === 'block') ? 'none' : 'block';" 
+                            type="button"
+                            style="background: #c2410c; border: none; color: white; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                </div>
             </div>
 
             <!-- Menú Desplegable Exclusivo de la Tienda -->
