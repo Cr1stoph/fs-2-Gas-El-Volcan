@@ -1,118 +1,83 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <title>Iniciar Sesión - Gas El Volcán</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="./assets/js/script.js" defer></script>
 </head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
 
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <!-- Encabezado y navegación -->
+    <header style="background-color: #ea580c; color: white; padding: 12px 16px; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: white; font-weight: bold; font-size: 1.25rem;">
+                <span style="background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">🌋</span>
+                <span>Gas El Volcán</span>
+            </a>
 
-        <!-- Encabezado y navegación unificado -->
-        <header class="bg-orange-600 text-white shadow-md sticky top-0 z-50">
-            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-                
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center space-x-2">
-                    <div class="bg-white rounded-full h-10 w-10 flex items-center justify-center text-xl shadow-sm">🌋</div>
-                    <span class="text-xl font-bold text-white">Gas El Volcán</span>
-                </a>
-                
-                <!-- Acceso directo al Carrito + Botón Menú -->
-                <div class="flex items-center space-x-3">
-                    <a href="carrito.html" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-3 rounded-lg shadow flex items-center space-x-1 transition text-sm"> 
-                        <span>🛒</span>
-                        <span class="cart-counter">(0)</span>
-                    </a>
+            <button onclick="let m = document.getElementById('menu-login'); m.style.display = (m.style.display === 'block') ? 'none' : 'block';" 
+                    type="button"
+                    style="background: #c2410c; border: none; color: white; cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
 
-                    <!-- Botón de Menú Hamburguesa -->
-                    <button id="mobile-menu-btn" class="text-white focus:outline-none p-2 rounded-lg hover:bg-orange-700 transition" aria-label="Abrir menú">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+        <div id="menu-login" style="display: none; background-color: #9a3412; margin-top: 12px; padding: 8px; border-radius: 8px;">
+            <a href="index.html" style="display: block; color: white; text-decoration: none; padding: 10px 12px; font-weight: bold; border-bottom: 1px solid #c2410c;">🏠 Volver al Inicio</a>
+            <a href="nosotros.html" style="display: block; color: white; text-decoration: none; padding: 10px 12px; font-weight: bold; border-bottom: 1px solid #c2410c;">👥 Nosotros</a>
+            <a href="index.html#contacto" style="display: block; color: white; text-decoration: none; padding: 10px 12px; font-weight: bold;">📞 Ayuda / Soporte</a>
+        </div>
+    </header>
+
+    <!-- Formulario de Iniciar Sesión General -->
+    <main class="container mx-auto px-4 py-12 flex items-center justify-center flex-grow">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md">
+            
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-3">
+                    👤
                 </div>
+                <h1 class="text-2xl font-bold text-gray-900">Iniciar Sesión</h1>
+                <p class="text-sm text-gray-500 mt-1">Ingresa tus datos para acceder a tu cuenta</p>
             </div>
 
-            <!-- Menú Desplegable Unificado -->
-            <div id="mobile-menu" class="hidden bg-orange-700 border-t border-orange-500 px-4 pt-3 pb-4 space-y-2">
-                <a href="index.html" class="block font-medium hover:bg-orange-800 px-3 py-2 rounded-md transition">Inicio</a>
-                <a href="nosotros.html" class="block font-medium hover:bg-orange-800 px-3 py-2 rounded-md transition">Nosotros</a>
-                <a href="index.html#contacto" class="block font-medium hover:bg-orange-800 px-3 py-2 rounded-md transition">Contacto</a>
-                <a href="login.html" class="block font-medium hover:bg-orange-800 px-3 py-2 rounded-md transition">Iniciar Sesión</a>
-            </div>
-        </header>
-
-    <main class="flex-grow flex items-center justify-center px-4">
-        <section class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-
-            <!-- Bienvenida centrada -->
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold mb-2">Bienvenido</h2>
-                <p class="text-gray-600">Ingresa tus datos para acceder a tu cuenta.</p>
-            </div>
-
-            <!-- Formulario -->
-            <form id="form-login" class="space-y-4">
-
+            <form action="admin.html" method="GET" class="space-y-5">
                 <div>
-                    <label for="correo" class="block text-left text-gray-700 font-medium mb-1">
-                        Correo Electrónico:
-                    </label>
-                    <input
-                        type="email"
-                        id="correo"
-                        name="correo"
-                        placeholder="Ingresa tu correo"
-                        autocomplete="email"
-                        required
-                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    >
+                    <label for="usuario" class="block text-sm font-semibold text-gray-700 mb-2">Correo o Usuario</label>
+                    <input type="text" id="usuario" name="usuario" placeholder="tu@correo.cl" required
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-sm">
                 </div>
 
                 <div>
-                    <label for="contrasena" class="block text-left text-gray-700 font-medium mb-1">
-                        Contraseña:
-                    </label>
-                    <input
-                        type="password"
-                        id="contrasena"
-                        name="contrasena"
-                        placeholder="Ingresa tu contraseña"
-                        autocomplete="current-password"
-                        required
-                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    >
+                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-sm">
                 </div>
 
-                <button
-                    type="submit"
-                    class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Iniciar Sesión
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center text-gray-600">
+                        <input type="checkbox" class="rounded border-gray-300 text-orange-600 focus:ring-orange-500 mr-2">
+                        Recordarme
+                    </label>
+                    <a href="#" class="text-orange-600 hover:underline font-medium">¿Olvidaste tu clave?</a>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg text-base">
+                    Ingresar
                 </button>
             </form>
 
-            <!-- Links -->
-            <div class="text-center mt-6 space-y-2">
-                <p>¿No tienes una cuenta?
-                    <a href="registro.html" class="text-orange-600 hover:underline">Regístrate aquí</a>
-                </p>
-                <p>
-                    <a href="index.html" class="text-orange-600 hover:underline">Volver a la página principal</a>
-                </p>
-            </div>
-
-        </section>
-    </main>
-    
-    <footer>
-        <div>
-            <p>2026 Distribuidora de gas El Volcan. Todos los derechos reservados.</p>
-            <p>Proyecto Informatica / DuocUC.</p>
         </div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-4 text-center text-xs border-t border-gray-800">
+        <p>&copy; 2026 Distribuidora de gas El Volcán. Todos los derechos reservados.</p>
     </footer>
+
 </body>
 </html>
