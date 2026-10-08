@@ -1,19 +1,31 @@
-# React + Vite
+# Gas El Volcán
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para la distribuidora Gas El Volcán, construida con React y Vite.
 
-Currently, two official plugins are available:
+## Desarrollo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+Comprobaciones disponibles:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```bash
+npm run lint
+npm run build
+```
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+## Estructura de `src`
 
-## Expanding the ESLint configuration
+- `main.jsx`: punto de entrada. Monta React, los proveedores globales y los estilos base.
+- `App.jsx`: configura las rutas y el router de la aplicación.
+- `layouts/`: estructuras compartidas por grupos de páginas. `PublicLayout` comparte encabezado y pie de página; `AdminLayout` comparte la navegación administrativa.
+- `pages/`: contenido de cada ruta. Las páginas renderizadas dentro de un layout no vuelven a dibujar su navegación.
+- `core/`: componentes compartidos de la interfaz, como el encabezado y el pie.
+- `context/`: contextos de estado y sus proveedores; `CartContext` define el contexto y `CartProvider` administra el estado del carrito.
+- `data/`: acceso a datos de ejemplo para productos.
+- `hooks/`: lógica reutilizable de React.
+- `assets/`: recursos importados desde el código.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Las rutas públicas se agregan como hijas de `PublicLayout` en `App.jsx`. Las rutas administrativas se agregan como hijas de `AdminLayout`, que es el único responsable de la barra lateral del panel.
