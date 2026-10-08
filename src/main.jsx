@@ -3,40 +3,43 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
-// 1. Importamos el Layout maestro (Header + Footer)
-import { Root } from './Root';
-
-// 2. Importamos las páginas de tu proyecto
+import { PublicLayout } from './layouts/PublicLayout';
+import { AdminLayout } from './layouts/AdminLayout';
 import { HomePage } from './pages/HomePage';
-import { NosotrosPage } from './pages/NosotrosPage';
-import { CartPage } from './pages/CartPage';
 import { LoginPage } from './pages/LoginPage';
-import { RegistroPage } from './pages/RegistroPage';
 import { AdminPage } from './pages/AdminPage';
+import { CartProvider } from './context/CartContext';
 
-// 3. Configuramos las rutas siguiendo la estructura de tu profe
+// 👇 IMPORTA LAS PÁGINAS QUE FALTABAN
+import { CartPage } from './pages/CartPage'; 
+import { NosotrosPage } from './pages/NosotrosPage';
+import { RegistroPage } from './pages/RegistroPage';
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />, // El Root envuelve estas rutas con el Header y Footer
+    element: <PublicLayout />,
     children: [
-      { index: true, element: <HomePage /> }, // Ruta base "/"
+      { index: true, element: <HomePage /> },
+      { path: 'carrito', element: <CartPage /> }, // 👈 AQUÍ ESTÁ LA SOLUCIÓN AL 404
       { path: 'nosotros', element: <NosotrosPage /> },
-      { path: 'carrito', element: <CartPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'registro', element: <RegistroPage /> },
     ],
   },
   {
-    // El panel de admin queda fuera del Root porque tiene su propio menú lateral
     path: '/admin',
-    element: <AdminPage />,
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <AdminPage /> },
+    ],
   }
 ]);
 
-// 4. Renderizamos la aplicación
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
   </React.StrictMode>
 );

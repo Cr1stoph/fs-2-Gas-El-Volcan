@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import {CartContext} from '../context/CartContext.jsx';
 import { Link } from 'react-router-dom';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const {cart} = useContext(CartContext);
+
+  const totalItems = cart.reduce((acc, item) => acc + item.cantidad, 0);
 
   return (
     <header style={{ backgroundColor: '#ea580c', color: 'white', padding: '12px 16px', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
@@ -15,7 +20,7 @@ export function Header() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Link to="/carrito" id="btn-ir-carrito" style={{ background: '#c2410c', color: 'white', textDecoration: 'none', padding: '8px 12px', borderRadius: '8px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem' }}>
-            🛒 <span id="cart-counter">(0)</span>
+            🛒 <span id="cart-counter">({totalItems})</span>
           </Link>
 
           <button 
