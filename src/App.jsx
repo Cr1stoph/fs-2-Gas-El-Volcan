@@ -8,24 +8,27 @@ import { LoginPage } from './pages/LoginPage';
 import { NosotrosPage } from './pages/NosotrosPage';
 import { RegistroPage } from './pages/RegistroPage';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <PublicLayout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: 'carrito', element: <CartPage /> },
-      { path: 'nosotros', element: <NosotrosPage /> },
-      { path: 'login', element: <LoginPage /> },
-      { path: 'registro', element: <RegistroPage /> },
-    ],
-  },
-  {
-    path: '/admin',
-    element: <AdminLayout />,
-    children: [{ index: true, element: <AdminPage /> }],
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <PublicLayout />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: 'carrito', element: <CartPage /> },
+        { path: 'nosotros', element: <NosotrosPage /> },
+        { path: 'login', element: <LoginPage /> },
+        { path: 'registro', element: <RegistroPage /> },
+      ],
+    },
+    {
+      path: '/admin',
+      element: <AdminLayout />,
+      children: [{ index: true, element: <AdminPage /> }],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL },
+);
 
 export function App() {
   return <RouterProvider router={router} />;

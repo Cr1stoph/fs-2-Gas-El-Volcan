@@ -16,6 +16,14 @@ npm run lint
 npm run build
 ```
 
+## Publicación en GitHub Pages
+
+Al hacer push a `main`, `.github/workflows/deploy-pages.yml` instala las
+dependencias, ejecuta lint y build, y publica `dist` en GitHub Pages. En la
+configuración del repositorio, Pages debe usar **GitHub Actions** como fuente
+de publicación. Vite configura la ruta base del repositorio y `404.html`
+permite abrir directamente las rutas internas de la aplicación.
+
 ## Estructura de `src`
 
 - `main.jsx`: punto de entrada. Monta React, los proveedores globales y los estilos base.
