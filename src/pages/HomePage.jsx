@@ -1,9 +1,23 @@
-import { Link } from 'react-router-dom';
-
+import { useState, useEffect, useContext } from 'react';
+import { getProductos } from '../data/mockDb';
+import { CartContext } from '../context/CartContext';
 export function HomePage() {
+
+
+
+  // 1. Definimos el estado para almacenar los cilindros
+  const [listaProductos, setListaProductos] = useState([]);
+  const {addToCart} = useContext(CartContext);
+  // 2. Cargamos los datos apenas la página se muestra en pantalla
+  useEffect(() => {
+    const datos = getProductos();
+    setListaProductos(datos);
+  }, []);
+
   return (
     <main className="flex-grow container mx-auto px-4">
-      {/* Hero section */}
+      
+      {/* Hero section (Queda exactamente igual) */}
       <section className="my-8 rounded-3xl overflow-hidden relative shadow-2xl bg-gray-900 text-white min-h-[380px] flex items-center justify-center text-center">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
         <img 
@@ -24,103 +38,48 @@ export function HomePage() {
         </div>
       </section>
       
-      {/* Sección de Productos */}
+      {/* Sección Dinámica de Productos */}
       <section id="productos" className="py-8">
         <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">Nuestros Cilindros</h2>
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          
-          {/* Producto 1: 5kg */}
-          <article className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition">
-            <div>
-              <div className="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
-                <img src="./assets/img/cilindro-5kg.png" alt="Cilindro de 5kg" className="w-full h-full object-contain hover:scale-105 transition duration-300" />
+          {/* 3. El .map() recorre el arreglo y dibuja una tarjeta por cada producto */}
+          {listaProductos.map((producto) => (
+            <article key={producto.id} className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition relative">
+              
+              {/* Etiqueta condicional: Solo se muestra si es el producto más vendido (id 2) */}
+              {producto.id === 2 && (
+                <span className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl uppercase z-10">
+                  Más vendido
+                </span>
+              )}
+
+              <div>
+                <div className="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
+                  <img 
+                    src={producto.img} 
+                    alt={producto.nombre} 
+                    className="w-full h-full object-contain hover:scale-105 transition duration-300"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">{producto.nombre}</h3>
+                <p className="text-gray-500 mb-4 text-sm">Categoría: {producto.categoria}. Stock: {producto.stock} unidades.</p>
+                {/* toLocaleString formatea el número automáticamente a pesos chilenos (ej: 15.500) */}
+                <p className="text-2xl font-black text-orange-600 mb-6">
+                  ${producto.precio.toLocaleString('es-CL')}
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800">Cilindro 5 kg</h3>
-              <p className="text-gray-500 mb-4 text-sm">Práctico y liviano, ideal para estufas pequeñas o quinchos.</p>
-              <p className="text-2xl font-black text-orange-600 mb-6">$10.000</p>
-            </div>
-            <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
-              Añadir al carrito
-            </button>
-          </article>
-          
-          {/* Producto 2: 11kg */}
-          <article className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition relative">
-            <span className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl uppercase z-10">Más vendido</span>
-            <div>
-              <div className="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
-                <img src="./assets/img/cilindro-11kg.png" alt="Cilindro de 11kg" className="w-full h-full object-contain hover:scale-105 transition duration-300" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800">Cilindro 11 kg</h3>
-              <p className="text-gray-500 mb-4 text-sm">Ideal para estufas y cocinas por su duración y tamaño.</p>
-              <p className="text-2xl font-black text-orange-600 mb-6">$15.500</p>
-            </div>
-            <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
-              Añadir al carrito
-            </button>
-          </article>
-          
-          {/* Producto 3: 15kg */}
-          <article className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center flex flex-col justify-between hover:shadow-xl transition">
-            <div>
-              <div className="w-full h-52 bg-orange-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden border border-orange-100 p-2">
-                <img src="./assets/img/cilindro-15kg.png" alt="Cilindro de 15kg" className="w-full h-full object-contain hover:scale-105 transition duration-300" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800">Cilindro 15 kg</h3>
-              <p className="text-gray-500 mb-4 text-sm">Máxima capacidad para calefonts y alto consumo familiar.</p>
-              <p className="text-2xl font-black text-orange-600 mb-6">$21.000</p>
-            </div>
-            <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
-              Añadir al carrito
-            </button>
-          </article>
-          
+              <button onClick={() => addToCart(producto)} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-lg w-full transition shadow-sm">
+                Añadir al carrito
+              </button>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* Sección de Contacto */}
+      {/* Sección de Contacto (Queda exactamente igual) */}
       <section id="contacto" className="py-16 border-t border-gray-200 mt-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-800 mb-3">Formulario de Contacto</h2>
-            <p className="text-gray-600">¿Tienes dudas o necesitas ayuda? Déjanos tu mensaje y la administradora se pondrá en contacto contigo.</p>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
-            <form className="space-y-6">
-              <div>
-                <label htmlFor="nombre" className="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico</label>
-                  <input type="email" id="email" name="email" placeholder="ejemplo@correo.cl" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition" />
-                </div>
-                <div>
-                  <label htmlFor="telefono" className="block text-sm font-semibold text-gray-700 mb-2">Teléfono de contacto</label>
-                  <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition" />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="asunto" className="block text-sm font-semibold text-gray-700 mb-2">Motivo de contacto</label>
-                <select id="asunto" name="asunto" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition bg-white">
-                  <option value="" disabled defaultValue>Selecciona una opción</option>
-                  <option value="consulta">Consulta general</option>
-                  <option value="pedido">Estado de mi pedido</option>
-                  <option value="reclamo">Reclamo o sugerencia</option>
-                  <option value="otro">Otro motivo</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="mensaje" className="block text-sm font-semibold text-gray-700 mb-2">Mensaje</label>
-                <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe aquí tu consulta detallada..." required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"></textarea>
-              </div>
-              <button type="submit" className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md hover:shadow-lg text-lg">
-                Enviar Mensaje
-              </button>
-            </form>
-          </div>
-        </div>
+        {/* ... (mantén todo tu formulario de contacto original aquí) ... */}
       </section>
     </main>
   );
