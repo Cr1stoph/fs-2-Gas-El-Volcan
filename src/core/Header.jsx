@@ -11,7 +11,7 @@ export function Header() {
 
   return (
     <header style={{ backgroundColor: '#ea580c', color: 'white', padding: '12px 16px', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ width: '100%', margin: '0', maxWidth: '1500px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'white', fontWeight: 'bold', fontSize: '1.25rem' }}>
           <span style={{ background: 'white', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🌋</span>
