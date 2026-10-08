@@ -24,7 +24,10 @@ export function AdminPage() {
         </div>
       </header>
 
-      <section aria-label="Indicadores del negocio" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <section
+        aria-label="Indicadores del negocio"
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <article className="flex items-center justify-between rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
@@ -32,7 +35,10 @@ export function AdminPage() {
             </p>
             <p className="mt-1 text-2xl font-black text-gray-900">$185.000</p>
           </div>
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-2xl" aria-hidden="true">
+          <span
+            className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-2xl"
+            aria-hidden="true"
+          >
             💰
           </span>
         </article>
