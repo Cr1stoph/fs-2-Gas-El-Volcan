@@ -1,18 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { getProductos } from '../data/mockDb';
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../context/CartContext.js';
 export function HomePage() {
-
-
-
-  // 1. Definimos el estado para almacenar los cilindros
-  const [listaProductos, setListaProductos] = useState([]);
-  const {addToCart} = useContext(CartContext);
-  // 2. Cargamos los datos apenas la página se muestra en pantalla
-  useEffect(() => {
-    const datos = getProductos();
-    setListaProductos(datos);
-  }, []);
+  const listaProductos = getProductos();
+  const { addToCart } = useContext(CartContext);
 
   return (
     <main className="flex-grow container mx-auto px-4">

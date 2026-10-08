@@ -1,19 +1,32 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import Footer from './core/Footer.jsx'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { PublicLayout } from './layouts/PublicLayout';
+import { AdminLayout } from './layouts/AdminLayout';
+import { AdminPage } from './pages/AdminPage';
+import { CartPage } from './pages/CartPage';
+import { HomePage } from './pages/HomePage';
+import { LoginPage } from './pages/LoginPage';
+import { NosotrosPage } from './pages/NosotrosPage';
+import { RegistroPage } from './pages/RegistroPage';
 
-function App() {
-  const [count, setCount] = useState(0)
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <PublicLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'carrito', element: <CartPage /> },
+      { path: 'nosotros', element: <NosotrosPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'registro', element: <RegistroPage /> },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [{ index: true, element: <AdminPage /> }],
+  },
+]);
 
-  return (
-    <>
-    <Footer/>
-      
-    </>
-  )
+export function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App

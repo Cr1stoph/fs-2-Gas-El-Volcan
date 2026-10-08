@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import {CartContext} from '../context/CartContext.jsx';
+import { CartContext } from '../context/CartContext.js';
 import { Link } from 'react-router-dom';
 
 export function Header() {
