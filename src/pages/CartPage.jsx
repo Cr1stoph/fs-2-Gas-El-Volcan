@@ -1,6 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {useContext} from 'react';
+import { CartContext } from '../context/CartContext.js';
 
 export function CartPage() {
+  const { cart, clearCart } = useContext(CartContext);
+  const navigate = useNavigate();
+  const subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    clearCart(); // Usamos la variable de contexto para vaciar el carrito
+    navigate('/pago-correcto'); // Viajamos a la pantalla de éxito
+  };
   return (
     <main className="container mx-auto px-4 py-8 flex-grow">
       <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Carrito de Compras</h1>
