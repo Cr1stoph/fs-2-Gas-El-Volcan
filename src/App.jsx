@@ -7,6 +7,7 @@ import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { NosotrosPage } from './pages/NosotrosPage';
 import { RegistroPage } from './pages/RegistroPage';
+import { PagoCorrectoPage } from './pages/PagoCorrectoPage';
 
 const router = createBrowserRouter(
   [
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         { path: 'nosotros', element: <NosotrosPage /> },
         { path: 'login', element: <LoginPage /> },
         { path: 'registro', element: <RegistroPage /> },
+        { path: 'pago-correcto', element: <PagoCorrectoPage /> }
       ],
     },
     {
