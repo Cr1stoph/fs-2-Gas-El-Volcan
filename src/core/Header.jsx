@@ -1,46 +1,71 @@
-import { useState, useContext } from 'react';
-import { CartContext } from '../context/CartContext.js';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
+
+const enlaces = [
+  { to: '/categorias', texto: 'Productos' },
+  { to: '/ofertas', texto: 'Ofertas' },
+  { to: '/nosotros', texto: 'Nosotros' },
+  { to: '/#contacto', texto: 'Contacto' },
+];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const {cart} = useContext(CartContext);
-
-  const totalItems = cart.reduce((acc, item) => acc + item.cantidad, 0);
+  const { itemCount } = useContext(CartContext);
+  const cerrarMenu = () => setIsMenuOpen(false);
 
   return (
-    <header style={{ backgroundColor: '#ea580c', color: 'white', padding: '12px 16px', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-      <div style={{ width: '100%', margin: '0', maxWidth: '1500px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'white', fontWeight: 'bold', fontSize: '1.25rem' }}>
-          <span style={{ background: 'white', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🌋</span>
+    <header className="sticky top-0 z-50 border-b border-orange-700/30 bg-orange-600 text-white shadow-md">
+      <div className="container-fluid flex max-w-[1600px] items-center justify-between gap-3 px-3 py-3 px-lg-5">
+        <Link to="/" onClick={cerrarMenu} className="flex shrink-0 items-center gap-2 text-lg font-extrabold text-white no-underline md:text-xl">
+          <span className="flex h-10 w-10 items-center justify-center rounded-circle bg-white text-xl text-orange-700" aria-hidden="true">🌋</span>
           <span>Gas El Volcán</span>
         </Link>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Link to="/carrito" id="btn-ir-carrito" style={{ background: '#c2410c', color: 'white', textDecoration: 'none', padding: '8px 12px', borderRadius: '8px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem' }}>
-            🛒 <span id="cart-counter">({totalItems})</span>
-          </Link>
+        <nav className="hidden items-center gap-5 lg:flex" aria-label="Navegación principal">
+          {enlaces.map((enlace) => (
+            <Link className="font-semibold text-white/95 no-underline transition hover:text-orange-100" to={enlace.to} key={enlace.to}>
+              {enlace.texto}
+            </Link>
+          ))}
+        </nav>
 
-          <button 
+        <div className="flex items-center gap-2">
+          <Link to="/carrito" className="btn btn-dark flex items-center gap-2 rounded-lg border-0 px-3 py-2 font-bold text-white">
+            <span aria-hidden="true">🛒</span>
+            <span>Carrito <span className="rounded-pill bg-orange-400 px-2 py-0.5 text-sm" aria-label={`${itemCount} productos`}>{itemCount}</span></span>
+          </Link>
+          <button
+            aria-controls="menu-tienda"
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             type="button"
-            style={{ background: '#c2410c', border: 'none', color: 'white', cursor: 'pointer', padding: '8px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg style={{ width: '28px', height: '28px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            className="btn btn-dark rounded-lg border-0 p-2 lg:hidden"
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+          <Link to="/login" className="hidden rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white no-underline transition hover:bg-white/25 lg:inline-flex">
+            Iniciar sesión
+          </Link>
         </div>
       </div>
 
       {isMenuOpen && (
-        <div id="menu-tienda" style={{ backgroundColor: '#9a3412', marginTop: '12px', padding: '8px', borderRadius: '8px' }}>
-          <Link onClick={() => setIsMenuOpen(false)} to="/#productos" style={{ display: 'block', color: 'white', textDecoration: 'none', padding: '10px 12px', fontWeight: 'bold', borderBottom: '1px solid #c2410c' }}>📦 Productos</Link>
-          <Link onClick={() => setIsMenuOpen(false)} to="/nosotros" style={{ display: 'block', color: 'white', textDecoration: 'none', padding: '10px 12px', fontWeight: 'bold', borderBottom: '1px solid #c2410c' }}>👥 Nosotros</Link>
-          <Link onClick={() => setIsMenuOpen(false)} to="/#contacto" style={{ display: 'block', color: 'white', textDecoration: 'none', padding: '10px 12px', fontWeight: 'bold', borderBottom: '1px solid #c2410c' }}>📞 Contacto</Link>
-          <Link onClick={() => setIsMenuOpen(false)} to="/login" style={{ display: 'block', color: '#fef08a', textDecoration: 'none', padding: '10px 12px', fontWeight: 'bold' }}>🔑 Iniciar Sesión</Link>
-        </div>
+        <nav id="menu-tienda" className="container-fluid max-w-[1600px] px-3 pb-3 lg:hidden" aria-label="Navegación móvil">
+          <div className="rounded-2xl bg-orange-800 p-2 shadow-inner">
+            {enlaces.map((enlace) => (
+              <Link className="block rounded-lg px-3 py-2.5 font-semibold text-white no-underline hover:bg-orange-700" to={enlace.to} key={enlace.to} onClick={cerrarMenu}>
+                {enlace.texto}
+              </Link>
+            ))}
+            <Link className="block rounded-lg px-3 py-2.5 font-semibold text-orange-100 no-underline hover:bg-orange-700" to="/login" onClick={cerrarMenu}>
+              Iniciar sesión
+            </Link>
+          </div>
+        </nav>
       )}
     </header>
   );

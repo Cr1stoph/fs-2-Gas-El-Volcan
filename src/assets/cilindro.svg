@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title">
+  <title id="title">Cilindro de gas</title>
+  <rect width="400" height="400" rx="36" fill="#fff7ed"/>
+  <ellipse cx="200" cy="334" rx="105" ry="18" fill="#fed7aa"/>
+  <path d="M166 72h68v36h-68z" fill="#9a3412"/>
+  <path d="M178 48h44v38h-44z" rx="7" fill="#c2410c"/>
+  <rect x="104" y="96" width="192" height="232" rx="50" fill="#ea580c"/>
+  <path d="M123 155c0-22 18-40 40-40h74c22 0 40 18 40 40v18H123z" fill="#fb923c"/>
+  <path d="M135 205h130v81H135z" rx="14" fill="#fff7ed"/>
+  <text x="200" y="240" fill="#c2410c" font-family="Arial,sans-serif" font-size="24" font-weight="700" text-anchor="middle">GAS</text>
+  <text x="200" y="267" fill="#9a3412" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle">EL VOLCÁN</text>
+  <path d="M160 311h80" stroke="#9a3412" stroke-linecap="round" stroke-width="8"/>
+</svg>

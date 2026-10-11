@@ -7,14 +7,14 @@ export function LoginPage() {
 
   return (
     <main className="container mx-auto px-4 py-12 flex items-center justify-center flex-grow">
-      <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md">
+      <div className="bg-white p-8 rounded-2xl shadow-xl border border-orange-100 w-full max-w-md">
         
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-3">
             👤
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Iniciar Sesión</h1>
-          <p className="text-sm text-gray-500 mt-1">Ingresa tus datos para acceder a tu cuenta</p>
+          <p className="text-sm text-gray-500 mt-1">Acceso de demostración para el panel administrativo</p>
         </div>
 
         {/* Le pasamos la función del hook al evento onSubmit del formulario */}
@@ -34,13 +34,16 @@ export function LoginPage() {
               <input type="checkbox" className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 mr-2" />
               Recordarme
             </label>
-            <a href="#" className="text-orange-600 hover:underline font-medium">¿Olvidaste tu clave?</a>
+            <Link to="/#contacto" className="text-orange-700 hover:underline font-medium">¿Necesitas ayuda?</Link>
           </div>
 
           <button type="submit" className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg text-base">
             Ingresar
           </button>
         </form>
+        <p className="mt-3 text-center text-xs text-gray-500">
+          El prototipo no verifica ni almacena contraseñas. Para probar el panel, completa ambos campos.
+        </p>
 
         <div className="mt-6 pt-6 border-t border-gray-100 text-center">
           <p className="text-sm text-gray-600 mb-3">¿Aún no tienes una cuenta?</p>

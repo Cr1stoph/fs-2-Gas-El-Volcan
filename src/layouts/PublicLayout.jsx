@@ -5,11 +5,11 @@ import { Footer } from '../core/Footer';
 
 export function PublicLayout() {
   return (
-    <div className="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-orange-50/30 text-gray-800">
       <Header />
-      
+
       <Outlet />
-      
+
       <Footer />
     </div>
   );

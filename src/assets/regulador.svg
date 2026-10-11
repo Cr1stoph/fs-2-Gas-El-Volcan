@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title">
+  <title id="title">Regulador para cilindro de gas</title>
+  <rect width="400" height="400" rx="36" fill="#fff7ed"/>
+  <circle cx="200" cy="195" r="106" fill="#fed7aa"/>
+  <path d="M200 77v48m-30-48h60" fill="none" stroke="#9a3412" stroke-linecap="round" stroke-width="20"/>
+  <circle cx="200" cy="195" r="77" fill="#ea580c"/>
+  <circle cx="200" cy="195" r="49" fill="#fff7ed"/>
+  <path d="m200 195 30-31" stroke="#c2410c" stroke-linecap="round" stroke-width="9"/>
+  <circle cx="200" cy="195" r="8" fill="#9a3412"/>
+  <path d="M277 195h48v43h-49m-152-15v51" fill="none" stroke="#c2410c" stroke-linecap="round" stroke-width="18"/>
+  <text x="200" y="350" fill="#9a3412" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle">REGULADOR</text>
+</svg>

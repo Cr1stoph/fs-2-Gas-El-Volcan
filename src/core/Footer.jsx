@@ -1,9 +1,9 @@
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 py-6 text-center text-sm border-t border-gray-800 mt-auto">
-      <div className="container mx-auto px-4">
-        <p>&copy; 2026 Distribuidora de gas El Volcán. Todos los derechos reservados.</p>
-        <p className="text-xs text-orange-400 mt-1">Proyecto Informática / Duoc UC</p>
+    <footer className="mt-auto border-t border-orange-950 bg-gray-900 py-7 text-center text-sm text-gray-300">
+      <div className="container-fluid mx-auto max-w-[1600px] px-4">
+        <p className="mb-1 font-semibold">&copy; {new Date().getFullYear()} Distribuidora de gas El Volcán.</p>
+        <p className="mb-0 text-xs text-orange-300">Servicio local para Chillán y la Región de Ñuble</p>
       </div>
     </footer>
   );

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title">
+  <title id="title">Flexible para conexión de gas</title>
+  <rect width="400" height="400" rx="36" fill="#fff7ed"/>
+  <path d="M107 108c-44 43-44 141 0 184 42 41 144 41 186 0 44-43 44-141 0-184-42-41-144-41-186 0Z" fill="none" stroke="#ea580c" stroke-linecap="round" stroke-width="26" stroke-dasharray="18 9"/>
+  <path d="M103 105h-31v47h39m218 96h31v47h-39" fill="none" stroke="#9a3412" stroke-linecap="round" stroke-linejoin="round" stroke-width="22"/>
+  <circle cx="200" cy="200" r="35" fill="#fed7aa"/>
+  <path d="m200 179 13 21-13 21-13-21z" fill="#c2410c"/>
+  <text x="200" y="350" fill="#9a3412" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle">CONEXIÓN SEGURA</text>
+</svg>
