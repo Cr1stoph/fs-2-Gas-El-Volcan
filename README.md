@@ -1,20 +1,59 @@
 # Gas El Volcán
 
-Aplicación web para la distribuidora Gas El Volcán, construida con React y Vite.
+Aplicación web de demostración para la distribuidora Gas El Volcán. Permite
+explorar productos, gestionar un carrito y simular un pedido de gas en Chillán.
 
-## Desarrollo
+## Requisitos
+
+- Node.js 20.19+ o 22.12+
+- npm
+- Chrome o Chromium para ejecutar Karma (también se puede usar Edge mediante
+  `CHROME_BIN`)
+
+## Instalación y desarrollo
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Comprobaciones disponibles:
+## Comprobaciones
 
 ```bash
 npm run lint
+npm test
 npm run build
 ```
+
+Karma genera el informe HTML de cobertura en `coverage/` y lo excluye Git. En
+Windows, si no tienes Chrome instalado, puedes indicar la ruta de Edge antes de
+ejecutar las pruebas:
+
+```powershell
+$env:CHROME_BIN = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+npm test
+```
+
+La suite utiliza Jasmine, Karma y el navegador headless. El detalle de los casos
+y la última medición se encuentra en [docs/cobertura-pruebas.md](./docs/cobertura-pruebas.md).
+
+## Funcionalidades
+
+- Catálogo de cilindros y accesorios con filtros por categoría y búsqueda.
+- Precios de oferta, carrito con cantidades limitadas por stock y persistencia
+  local en el navegador.
+- Checkout con datos del cliente, dirección o retiro en tienda, costo de
+  despacho y resumen del pedido.
+- Resultado de pago exitoso o rechazado. El número de tarjeta
+  `0000000000000000` simula un rechazo; cualquier tarjeta de prueba de 16
+  dígitos se aprueba. No se procesa dinero real.
+- Panel para agregar, modificar y eliminar productos, revisar pedidos y
+  actualizar su estado.
+- Perfiles de compra guardados en el navegador. Las contraseñas no se guardan.
+
+Esta versión es un prototipo académico: usa `localStorage` como persistencia
+local, no tiene servidor, autenticación real, cobros ni envío de formularios.
+El panel administrativo no debe considerarse protegido para producción.
 
 ## Publicación en GitHub Pages
 
@@ -26,14 +65,22 @@ permite abrir directamente las rutas internas de la aplicación.
 
 ## Estructura de `src`
 
-- `main.jsx`: punto de entrada. Monta React, los proveedores globales y los estilos base.
-- `App.jsx`: configura las rutas y el router de la aplicación.
-- `layouts/`: estructuras compartidas por grupos de páginas. `PublicLayout` comparte encabezado y pie de página; `AdminLayout` comparte la navegación administrativa.
-- `pages/`: contenido de cada ruta. Las páginas renderizadas dentro de un layout no vuelven a dibujar su navegación.
-- `core/`: componentes compartidos de la interfaz, como el encabezado y el pie.
-- `context/`: contextos de estado y sus proveedores; `CartContext` define el contexto y `CartProvider` administra el estado del carrito.
-- `data/`: acceso a datos de ejemplo para productos.
-- `hooks/`: lógica reutilizable de React.
-- `assets/`: recursos importados desde el código.
+- `main.jsx`: monta React, el proveedor del carrito y los estilos.
+- `App.jsx`: configura las rutas y layouts.
+- `layouts/`: navegación y marco común de páginas públicas y administrativas.
+- `pages/`: inicio, catálogo, ofertas, carrito, checkout, resultados de pago,
+  formularios informativos y panel.
+- `core/`: encabezado, pie de página y tarjetas reutilizables del catálogo.
+- `context/`: estado del carrito compartido por la aplicación.
+- `data/`: persistencia del catálogo, pedidos, perfiles y reglas de comercio.
+- `hooks/`: lógica de interacción reutilizable.
+- `assets/`: recursos visuales importados desde React.
 
-Las rutas públicas se agregan como hijas de `PublicLayout` en `App.jsx`. Las rutas administrativas se agregan como hijas de `AdminLayout`, que es el único responsable de la barra lateral del panel.
+Los productos, pedidos, perfiles y carrito usan almacenamiento local del
+navegador. Las rutas públicas se agregan como hijas de `PublicLayout` en
+`App.jsx`; la ruta `/admin` usa el marco compartido de la tienda.
+
+## Documentación de evaluación
+
+- [Especificación de requisitos (ERS)](./docs/ERS.md)
+- [Cobertura y casos de prueba](./docs/cobertura-pruebas.md)
