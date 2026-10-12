@@ -14,14 +14,14 @@ export function LoginPage() {
             👤
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Iniciar Sesión</h1>
-          <p className="text-sm text-gray-500 mt-1">Acceso de demostración para el panel administrativo</p>
+          <p className="text-sm text-gray-500 mt-1">Ingresa con tu correo para continuar a la tienda o al panel de administración.</p>
         </div>
 
         {/* Le pasamos la función del hook al evento onSubmit del formulario */}
         <form onSubmit={handleLoginSubmit} className="space-y-5">
           <div>
-            <label htmlFor="usuario" className="block text-sm font-semibold text-gray-700 mb-2">Correo o Usuario</label>
-            <input type="text" id="usuario" name="usuario" placeholder="tu@correo.cl" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-sm" />
+            <label htmlFor="correo" className="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" autoComplete="email" placeholder="tu@correo.cl" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-sm" />
           </div>
 
           <div>
@@ -42,7 +42,7 @@ export function LoginPage() {
           </button>
         </form>
         <p className="mt-3 text-center text-xs text-gray-500">
-          El prototipo no verifica ni almacena contraseñas. Para probar el panel, completa ambos campos.
+          En esta demostración no se verifican contraseñas. Usa admin@gmail.com para el panel administrador; cualquier otro correo abre la tienda.
         </p>
 
         <div className="mt-6 pt-6 border-t border-gray-100 text-center">
