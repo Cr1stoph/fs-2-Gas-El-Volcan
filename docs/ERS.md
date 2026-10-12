@@ -44,8 +44,8 @@ envío de correos o conexión real con un sistema logístico.
   etiquetas, estados vacíos y mensajes de validación comprensibles.
 - **RNF-02, compatibilidad:** la aplicación debe compilar con Vite y funcionar
   en navegadores modernos.
-- **RNF-03, adaptabilidad:** usar layout responsivo con Bootstrap y utilidades
-  de Tailwind para móvil y escritorio.
+- **RNF-03, adaptabilidad:** usar utilidades de Tailwind para layouts
+  responsivos en móvil y escritorio.
 - **RNF-04, mantenibilidad:** separar páginas, componentes, contexto y lógica de
   datos; ejecutar ESLint, build y pruebas antes de entregar.
 - **RNF-05, privacidad de demostración:** no guardar contraseñas ni transmitir

@@ -1,4 +1,3 @@
-@import "bootstrap/dist/css/bootstrap.min.css" layer(bootstrap);
 @import "tailwindcss";
 
 :root {
@@ -46,76 +45,64 @@ a {
   background: linear-gradient(120deg, #7c2d12, #ea580c 72%, #fb923c);
 }
 
-.btn-primary {
-  --bs-btn-bg: #ea580c;
-  --bs-btn-border-color: #ea580c;
-  --bs-btn-hover-bg: #c2410c;
-  --bs-btn-hover-border-color: #c2410c;
-  --bs-btn-active-bg: #9a3412;
-  --bs-btn-active-border-color: #9a3412;
-}
+@layer components {
+  .admin-table {
+    @apply w-full border-collapse text-left text-base;
+  }
 
-.form-control:focus,
-.form-select:focus {
-  border-color: #fb923c;
-  background-color: #fff;
-  box-shadow: 0 0 0 0.2rem rgb(234 88 12 / 18%);
-}
+  .admin-table th,
+  .admin-table td {
+    @apply border-b border-gray-200 px-2 py-2 align-middle;
+  }
 
-.form-control,
-.form-select {
-  min-height: 44px;
-  padding: 0.625rem 0.875rem;
-  color: #292524;
-  background-color: #fff7ed;
-  border-color: #fdba74;
-  border-radius: 0.65rem;
-}
+  .admin-table thead {
+    @apply bg-gray-100;
+  }
 
-.form-control[type="checkbox"],
-.form-control[type="radio"] {
-  min-height: auto;
-  padding: 0;
-}
-
-textarea.form-control {
-  min-height: 120px;
-}
-
-.form-control::placeholder {
-  color: #64748b;
-  opacity: 1;
-}
-
-.form-control:disabled,
-.form-control[readonly],
-.form-select:disabled {
-  color: #475569;
-  background-color: #f1f5f9;
+  .admin-table tbody tr:hover {
+    @apply bg-gray-100;
+  }
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
 textarea,
 select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.625rem 0.875rem;
   color: #292524;
   background-color: #fff7ed;
-  border-color: #fdba74;
+  border: 1px solid #fdba74;
   border-radius: 0.65rem;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):focus,
-textarea:focus,
-select:focus {
-  background-color: #fff;
-  border-color: #ea580c;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgb(234 88 12 / 18%);
+textarea {
+  min-height: 120px;
 }
 
 input::placeholder,
 textarea::placeholder {
   color: #64748b;
   opacity: 1;
+}
+
+input:disabled,
+input[readonly],
+textarea:disabled,
+textarea[readonly],
+select:disabled {
+  color: #475569;
+  background-color: #f1f5f9;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):focus,
+textarea:focus,
+select:focus {
+  background-color: #fff;
+  border-color: #fb923c;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(234 88 12 / 18%);
 }
 
 @media (prefers-reduced-motion: reduce) {

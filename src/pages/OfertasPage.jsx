@@ -9,7 +9,7 @@ export function OfertasPage() {
   const ofertas = filtrarProductos(getProductos(), { soloOfertas: true });
 
   return (
-    <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-5">
+    <main className="mx-auto page-content flex-grow px-3 py-5">
       <section className="page-banner mb-5 rounded-3xl p-5 md:p-8 text-white shadow-lg">
         <p className="mb-2 text-sm font-bold uppercase tracking-wider text-orange-200">Precios especiales</p>
         <h1 className="mb-2 text-3xl font-extrabold md:text-4xl">Ofertas de la tienda</h1>

@@ -21,12 +21,12 @@ export function ProductGrid({ productos, onAdd }) {
 
   return (
     <>
-      <p className="visually-hidden" role="status" aria-live="polite">{mensaje}</p>
-      <div className="row g-4 mx-auto max-w-6xl">
+      <p className="sr-only" role="status" aria-live="polite">{mensaje}</p>
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 min-[768px]:grid-cols-2 min-[1200px]:grid-cols-3">
         {productos.map((producto) => {
           const enOferta = producto.precioOferta && producto.precioOferta < producto.precio;
           return (
-            <div className="col-12 col-md-6 col-xl-4" key={producto.id}>
+            <div className="min-w-0" key={producto.id}>
               <article className="relative flex h-full flex-col justify-between rounded-2xl border border-orange-100 bg-white p-5 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
                 {enOferta && (
                   <span className="absolute right-3 top-3 rounded-full bg-yellow-300 px-3 py-1 text-xs font-bold uppercase text-yellow-950">
@@ -62,7 +62,7 @@ export function ProductGrid({ productos, onAdd }) {
                   type="button"
                   disabled={producto.stock <= 0}
                   onClick={() => agregarProducto(producto)}
-                  className="btn btn-success w-100 rounded-lg py-2.5 font-bold text-white shadow-sm disabled:cursor-not-allowed"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-[#198754] py-2.5 font-bold text-white shadow-sm transition hover:bg-[#157347] active:bg-[#146c43] disabled:cursor-not-allowed"
                 >
                   {producto.stock > 0 ? 'Añadir al carrito' : 'Sin stock'}
                 </button>

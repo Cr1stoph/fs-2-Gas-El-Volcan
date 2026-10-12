@@ -6,7 +6,7 @@ export function PagoFallidoPage() {
   const pedido = pedidoId ? getPedidoById(pedidoId) : null;
 
   return (
-    <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-5">
+    <main className="mx-auto page-content flex-grow px-3 py-5">
       <section className="mx-auto max-w-2xl overflow-hidden rounded-3xl border border-red-100 bg-white shadow-xl">
         <div className="bg-red-700 px-6 py-8 text-center text-white">
           <span className="mb-3 block text-6xl" aria-hidden="true">!</span>
@@ -34,8 +34,8 @@ export function PagoFallidoPage() {
             </>
           ) : <p className="text-center text-gray-600">No se encontró el detalle de este intento de pago.</p>}
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-            <Link to="/checkout" className="btn btn-primary flex-1 rounded-lg py-3 font-bold">Intentar nuevamente</Link>
-            <Link to="/carrito" className="btn btn-outline-secondary flex-1 rounded-lg py-3 font-bold">Revisar carrito</Link>
+            <Link to="/checkout" className="inline-flex flex-1 items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-3 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">Intentar nuevamente</Link>
+            <Link to="/carrito" className="inline-flex flex-1 items-center justify-center rounded-lg border border-gray-400 bg-transparent py-3 font-bold leading-6 text-gray-700 transition hover:bg-gray-100">Revisar carrito</Link>
           </div>
         </div>
       </section>

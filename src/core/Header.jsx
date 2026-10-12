@@ -16,9 +16,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-orange-700/30 bg-orange-600 text-white shadow-md">
-      <div className="container-fluid flex max-w-[1600px] items-center justify-between gap-3 px-3 py-3 px-lg-5">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-3 py-3">
         <Link to="/" onClick={cerrarMenu} className="flex shrink-0 items-center gap-2 text-lg font-extrabold text-white no-underline md:text-xl">
-          <span className="flex h-10 w-10 items-center justify-center rounded-circle bg-white text-xl text-orange-700" aria-hidden="true">🌋</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xl text-orange-700" aria-hidden="true">🌋</span>
           <span>Gas El Volcán</span>
         </Link>
 
@@ -31,9 +31,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link to="/carrito" className="btn btn-dark flex items-center gap-2 rounded-lg border-0 px-3 py-2 font-bold text-white">
+          <Link to="/carrito" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#212529] px-3 py-2 font-bold text-white transition hover:bg-[#1c1f23]">
             <span aria-hidden="true">🛒</span>
-            <span>Carrito <span className="rounded-pill bg-orange-400 px-2 py-0.5 text-sm" aria-label={`${itemCount} productos`}>{itemCount}</span></span>
+            <span>Carrito <span className="rounded-full bg-orange-400 px-2 py-0.5 text-sm" aria-label={`${itemCount} productos`}>{itemCount}</span></span>
           </Link>
           <button
             aria-controls="menu-tienda"
@@ -41,7 +41,7 @@ export function Header() {
             aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             type="button"
-            className="btn btn-dark rounded-lg border-0 p-2 lg:hidden"
+            className="inline-flex items-center justify-center rounded-lg bg-[#212529] p-2 text-white transition hover:bg-[#1c1f23] lg:hidden"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -54,7 +54,7 @@ export function Header() {
       </div>
 
       {isMenuOpen && (
-        <nav id="menu-tienda" className="container-fluid max-w-[1600px] px-3 pb-3 lg:hidden" aria-label="Navegación móvil">
+        <nav id="menu-tienda" className="mx-auto max-w-[1600px] px-3 pb-3 lg:hidden" aria-label="Navegación móvil">
           <div className="rounded-2xl bg-orange-800 p-2 shadow-inner">
             {enlaces.map((enlace) => (
               <Link className="block rounded-lg px-3 py-2.5 font-semibold text-white no-underline hover:bg-orange-700" to={enlace.to} key={enlace.to} onClick={cerrarMenu}>

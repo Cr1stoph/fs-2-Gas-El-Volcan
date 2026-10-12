@@ -6,7 +6,7 @@ export function PagoCorrectoPage() {
   const pedido = pedidoId ? getPedidoById(pedidoId) : null;
 
   return (
-    <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-5">
+    <main className="mx-auto page-content flex-grow px-3 py-5">
       <section className="mx-auto max-w-2xl overflow-hidden rounded-3xl border border-green-100 bg-white shadow-xl">
         <div className="bg-green-600 px-6 py-8 text-center text-white">
           <span className="mb-3 block text-6xl" aria-hidden="true">✓</span>
@@ -38,7 +38,7 @@ export function PagoCorrectoPage() {
           ) : (
             <p className="text-center text-gray-600">Tu compra quedó registrada correctamente.</p>
           )}
-          <Link to="/" className="btn btn-primary mt-5 w-100 rounded-lg py-3 font-bold">Volver al inicio</Link>
+          <Link to="/" className="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-3 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">Volver al inicio</Link>
         </div>
       </section>
     </main>

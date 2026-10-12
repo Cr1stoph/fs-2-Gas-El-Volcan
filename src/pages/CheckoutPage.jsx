@@ -55,48 +55,48 @@ export function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-5">
+      <main className="mx-auto page-content flex-grow px-3 py-5">
         <div className="mx-auto max-w-2xl rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm">
           <h1 className="mb-3 text-2xl font-extrabold">No hay productos para pagar</h1>
           <p className="text-gray-600">Agrega al menos un producto al carrito antes de continuar.</p>
-          <Link to="/categorias" className="btn btn-primary rounded-pill px-4">Ver productos</Link>
+          <Link to="/categorias" className="inline-flex items-center justify-center rounded-full border border-orange-600 bg-orange-600 px-4 py-1.5 leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">Ver productos</Link>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-5">
+    <main className="mx-auto page-content flex-grow px-3 py-5">
       <section className="page-banner mb-5 rounded-3xl p-5 md:p-8 text-white shadow-lg">
         <p className="mb-2 text-sm font-bold uppercase tracking-wider text-orange-200">Último paso</p>
         <h1 className="mb-0 text-3xl font-extrabold md:text-4xl">Datos de entrega y pago</h1>
       </section>
 
       <form onSubmit={confirmarCompra} noValidate>
-        <div className="row g-4">
-          <div className="col-12 col-lg-7">
-            <section className="mb-4 rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
+        <div className="grid grid-cols-1 gap-6 min-[992px]:grid-cols-[7fr_5fr]">
+          <div>
+            <section className="mb-4 rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
               <h2 className="mb-4 text-xl font-bold">Datos del cliente</h2>
-              <div className="row g-3">
-                <div className="col-12 col-md-6">
-                  <label className="form-label font-semibold" htmlFor="checkout-nombre">Nombre completo *</label>
-                  <input className="form-control" id="checkout-nombre" name="nombre" autoComplete="name" defaultValue={perfil.nombre} aria-invalid={Boolean(errores.nombre)} />
-                  {errores.nombre && <small className="text-danger">{errores.nombre}</small>}
+              <div className="grid grid-cols-1 gap-4 min-[768px]:grid-cols-2">
+                <div>
+                  <label className="mb-2 block font-semibold" htmlFor="checkout-nombre">Nombre completo *</label>
+                  <input id="checkout-nombre" name="nombre" autoComplete="name" defaultValue={perfil.nombre} aria-invalid={Boolean(errores.nombre)} />
+                  {errores.nombre && <small className="text-[#dc3545]">{errores.nombre}</small>}
                 </div>
-                <div className="col-12 col-md-6">
-                  <label className="form-label font-semibold" htmlFor="checkout-correo">Correo electrónico *</label>
-                  <input className="form-control" id="checkout-correo" name="correo" type="email" autoComplete="email" defaultValue={perfil.correo} aria-invalid={Boolean(errores.correo)} />
-                  {errores.correo && <small className="text-danger">{errores.correo}</small>}
+                <div>
+                  <label className="mb-2 block font-semibold" htmlFor="checkout-correo">Correo electrónico *</label>
+                  <input id="checkout-correo" name="correo" type="email" autoComplete="email" defaultValue={perfil.correo} aria-invalid={Boolean(errores.correo)} />
+                  {errores.correo && <small className="text-[#dc3545]">{errores.correo}</small>}
                 </div>
-                <div className="col-12 col-md-6">
-                  <label className="form-label font-semibold" htmlFor="checkout-telefono">Teléfono *</label>
-                  <input className="form-control" id="checkout-telefono" name="telefono" type="tel" autoComplete="tel" defaultValue={perfil.telefono} aria-invalid={Boolean(errores.telefono)} />
-                  {errores.telefono && <small className="text-danger">{errores.telefono}</small>}
+                <div>
+                  <label className="mb-2 block font-semibold" htmlFor="checkout-telefono">Teléfono *</label>
+                  <input id="checkout-telefono" name="telefono" type="tel" autoComplete="tel" defaultValue={perfil.telefono} aria-invalid={Boolean(errores.telefono)} />
+                  {errores.telefono && <small className="text-[#dc3545]">{errores.telefono}</small>}
                 </div>
               </div>
             </section>
 
-            <section className="mb-4 rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
+            <section className="mb-4 rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
               <h2 className="mb-4 text-xl font-bold">Entrega</h2>
               <div className="mb-3 flex flex-wrap gap-3">
                 <label className="flex flex-1 cursor-pointer items-center gap-2 rounded-xl border border-orange-100 p-3">
@@ -108,17 +108,17 @@ export function CheckoutPage() {
                   <span><strong>Retiro en tienda</strong><br /><small className="text-gray-500">Sin costo de despacho</small></span>
                 </label>
               </div>
-              {errores.tipoEntrega && <p className="text-danger">{errores.tipoEntrega}</p>}
+              {errores.tipoEntrega && <p className="text-[#dc3545]">{errores.tipoEntrega}</p>}
               {tipoEntrega === 'despacho' ? (
                 <div>
-                  <label className="form-label font-semibold" htmlFor="checkout-direccion">Dirección de entrega *</label>
-                  <input className="form-control" id="checkout-direccion" name="direccion" autoComplete="street-address" aria-invalid={Boolean(errores.direccion)} />
-                  {errores.direccion && <small className="text-danger">{errores.direccion}</small>}
+                  <label className="mb-2 block font-semibold" htmlFor="checkout-direccion">Dirección de entrega *</label>
+                  <input id="checkout-direccion" name="direccion" autoComplete="street-address" aria-invalid={Boolean(errores.direccion)} />
+                  {errores.direccion && <small className="text-[#dc3545]">{errores.direccion}</small>}
                 </div>
               ) : <p className="mb-0 rounded-lg bg-orange-50 p-3 text-sm text-gray-700">Podrás retirar tu pedido en nuestro punto de atención en Chillán.</p>}
             </section>
 
-            <section className="rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
+            <section className="rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
               <h2 className="mb-4 text-xl font-bold">Forma de pago</h2>
               <div className="mb-3 flex flex-wrap gap-3">
                 <label className="flex flex-1 cursor-pointer items-center gap-2 rounded-xl border border-orange-100 p-3">
@@ -132,9 +132,8 @@ export function CheckoutPage() {
               </div>
               {formaPago === 'tarjeta' && (
                 <div>
-                  <label className="form-label font-semibold" htmlFor="checkout-tarjeta">Número de tarjeta de prueba *</label>
+                  <label className="mb-2 block font-semibold" htmlFor="checkout-tarjeta">Número de tarjeta de prueba *</label>
                   <input
-                    className="form-control"
                     id="checkout-tarjeta"
                     name="numeroTarjeta"
                     type="text"
@@ -144,15 +143,15 @@ export function CheckoutPage() {
                     aria-invalid={Boolean(errores.numeroTarjeta)}
                   />
                   <small className="text-gray-500">Usa 0000000000000000 para simular un rechazo.</small>
-                  {errores.numeroTarjeta && <p className="mb-0 text-danger">{errores.numeroTarjeta}</p>}
+                  {errores.numeroTarjeta && <p className="mb-0 text-[#dc3545]">{errores.numeroTarjeta}</p>}
                 </div>
               )}
-              {errores.formaPago && <p className="text-danger">{errores.formaPago}</p>}
+              {errores.formaPago && <p className="text-[#dc3545]">{errores.formaPago}</p>}
             </section>
           </div>
 
-          <aside className="col-12 col-lg-5">
-            <section className="sticky top-24 rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
+          <aside>
+            <section className="sticky top-24 rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
               <h2 className="mb-4 border-b border-orange-100 pb-3 text-xl font-bold">Resumen de compra</h2>
               <div className="mb-3 space-y-3">
                 {cart.map((item) => (
@@ -172,7 +171,7 @@ export function CheckoutPage() {
               <div className="mt-4 flex justify-between border-t border-orange-100 pt-4 text-xl font-extrabold">
                 <span>Total</span><span className="text-orange-700">${total.toLocaleString('es-CL')}</span>
               </div>
-              <button type="submit" className="btn btn-primary mt-5 w-100 rounded-lg py-3 font-bold">
+              <button type="submit" className="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-3 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">
                 Confirmar y pagar
               </button>
               <p className="mt-3 mb-0 text-center text-xs text-gray-500">La tarjeta es una simulación de prueba; no se realizan cobros.</p>

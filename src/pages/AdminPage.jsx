@@ -102,7 +102,7 @@ export function AdminPage() {
   };
 
   return (
-    <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-5">
+    <main className="mx-auto page-content flex-grow px-3 py-5">
       <section className="page-banner mb-5 rounded-3xl p-5 md:p-8 text-white shadow-lg">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -110,18 +110,18 @@ export function AdminPage() {
             <h1 className="mb-2 text-3xl font-extrabold">Panel de Gas El Volcán</h1>
             <p className="mb-0 text-orange-50">Gestiona el inventario y revisa el estado de los pedidos.</p>
           </div>
-          <Link to="/" className="btn btn-light rounded-pill px-4 font-bold text-orange-700">Ir a la tienda</Link>
+          <Link to="/" className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-gray-50 px-4 py-1.5 font-bold leading-6 text-orange-700 transition hover:bg-gray-100">Ir a la tienda</Link>
         </div>
       </section>
 
-      <section aria-label="Indicadores del negocio" className="row g-4 mb-5">
+      <section aria-label="Indicadores del negocio" className="mb-5 grid grid-cols-1 gap-6 min-[576px]:grid-cols-2 min-[1200px]:grid-cols-4">
         {[
           { titulo: 'Ventas aprobadas', valor: `$${ventas.toLocaleString('es-CL')}`, icono: '💰' },
           { titulo: 'Pedidos activos', valor: pedidosActivos, icono: '📦' },
           { titulo: 'Unidades en stock', valor: stockTotal, icono: '🛢️' },
           { titulo: 'Productos', valor: productos.length, icono: '🏷️' },
         ].map((indicador) => (
-          <article className="col-12 col-sm-6 col-xl-3" key={indicador.titulo}>
+          <article key={indicador.titulo}>
             <div className="flex h-full items-center justify-between rounded-2xl border border-orange-100 bg-white p-5 shadow-sm">
               <div>
                 <p className="mb-1 text-xs font-bold uppercase tracking-wide text-gray-500">{indicador.titulo}</p>
@@ -133,52 +133,52 @@ export function AdminPage() {
         ))}
       </section>
 
-      <section className="mb-5 rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
+      <section className="mb-5 rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
         <div className="mb-4">
           <p className="mb-1 text-sm font-bold uppercase tracking-wider text-orange-600">Inventario</p>
           <h2 className="mb-1 text-2xl font-extrabold">Administrar productos</h2>
           <p className="mb-0 text-sm text-gray-600">Los cambios quedan guardados en este navegador.</p>
         </div>
-        <form onSubmit={guardarProducto} className="row align-items-end g-3 border-b border-orange-100 pb-5">
-          <div className="col-12 col-md-6 col-xl-3">
-            <label htmlFor="producto-nombre" className="form-label font-semibold">Nombre</label>
-            <input id="producto-nombre" className="form-control" name="nombre" value={formulario.nombre} onChange={actualizarCampo} required />
+        <form onSubmit={guardarProducto} className="-mx-2 grid grid-cols-12 items-end gap-y-4 border-b border-orange-100 pb-5">
+          <div className="col-span-12 px-2 min-[768px]:col-span-6 min-[1200px]:col-span-3">
+            <label htmlFor="producto-nombre" className="mb-2 block font-semibold">Nombre</label>
+            <input id="producto-nombre" name="nombre" value={formulario.nombre} onChange={actualizarCampo} required />
           </div>
-          <div className="col-6 col-md-3 col-xl-2">
-            <label htmlFor="producto-precio" className="form-label font-semibold">Precio normal</label>
-            <input id="producto-precio" className="form-control" name="precio" type="number" min="1" value={formulario.precio} onChange={actualizarCampo} required />
+          <div className="col-span-6 px-2 min-[768px]:col-span-3 min-[1200px]:col-span-2">
+            <label htmlFor="producto-precio" className="mb-2 block font-semibold">Precio normal</label>
+            <input id="producto-precio" name="precio" type="number" min="1" value={formulario.precio} onChange={actualizarCampo} required />
           </div>
-          <div className="col-6 col-md-3 col-xl-2">
-            <label htmlFor="producto-oferta" className="form-label font-semibold">Precio oferta</label>
-            <input id="producto-oferta" className="form-control" name="precioOferta" type="number" min="1" value={formulario.precioOferta} onChange={actualizarCampo} placeholder="Opcional" />
+          <div className="col-span-6 px-2 min-[768px]:col-span-3 min-[1200px]:col-span-2">
+            <label htmlFor="producto-oferta" className="mb-2 block font-semibold">Precio oferta</label>
+            <input id="producto-oferta" name="precioOferta" type="number" min="1" value={formulario.precioOferta} onChange={actualizarCampo} placeholder="Opcional" />
           </div>
-          <div className="col-6 col-md-3 col-xl-2">
-            <label htmlFor="producto-stock" className="form-label font-semibold">Stock</label>
-            <input id="producto-stock" className="form-control" name="stock" type="number" min="0" value={formulario.stock} onChange={actualizarCampo} required />
+          <div className="col-span-6 px-2 min-[768px]:col-span-3 min-[1200px]:col-span-2">
+            <label htmlFor="producto-stock" className="mb-2 block font-semibold">Stock</label>
+            <input id="producto-stock" name="stock" type="number" min="0" value={formulario.stock} onChange={actualizarCampo} required />
           </div>
-          <div className="col-6 col-md-3 col-xl-2">
-            <label htmlFor="producto-categoria" className="form-label font-semibold">Categoría</label>
-            <select id="producto-categoria" className="form-select" name="categoria" value={formulario.categoria} onChange={actualizarCampo}>
+          <div className="col-span-6 px-2 min-[768px]:col-span-3 min-[1200px]:col-span-2">
+            <label htmlFor="producto-categoria" className="mb-2 block font-semibold">Categoría</label>
+            <select id="producto-categoria" name="categoria" value={formulario.categoria} onChange={actualizarCampo}>
               <option>Cilindros</option>
               <option>Accesorios</option>
             </select>
           </div>
-          <div className="col-12 col-xl-1">
-            <button type="submit" className="btn btn-primary w-100 rounded-lg font-bold">
+          <div className="col-span-12 px-2 min-[1200px]:col-span-1">
+            <button type="submit" className="inline-flex w-full items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-1.5 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">
               {productoEditando === null ? 'Agregar' : 'Guardar'}
             </button>
           </div>
           {productoEditando !== null && (
-            <div className="col-12">
-              <button type="button" onClick={cancelarEdicion} className="btn btn-outline-secondary btn-sm">Cancelar edición</button>
+            <div className="col-span-12 px-2">
+              <button type="button" onClick={cancelarEdicion} className="inline-flex items-center justify-center rounded border border-gray-400 bg-transparent px-2 py-1 text-sm text-gray-700 transition hover:bg-gray-100">Cancelar edición</button>
             </div>
           )}
         </form>
-        {mensaje && <p className="alert alert-info mt-3 mb-0 py-2" role="status">{mensaje}</p>}
+        {mensaje && <p className="mt-3 mb-0 rounded-md border border-sky-200 bg-sky-100 px-4 py-2 text-sky-900" role="status">{mensaje}</p>}
 
         <div className="mt-4 overflow-x-auto">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
+          <table className="admin-table mb-0">
+            <thead>
               <tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Oferta</th><th>Stock</th><th>Acciones</th></tr>
             </thead>
             <tbody>
@@ -190,8 +190,8 @@ export function AdminPage() {
                   <td>{producto.precioOferta ? `$${producto.precioOferta.toLocaleString('es-CL')}` : '—'}</td>
                   <td>{producto.stock}</td>
                   <td className="whitespace-nowrap">
-                    <button type="button" onClick={() => editarProducto(producto)} className="btn btn-outline-primary btn-sm me-2">Editar</button>
-                    <button type="button" onClick={() => quitarProducto(producto)} className="btn btn-outline-danger btn-sm">Eliminar</button>
+                    <button type="button" onClick={() => editarProducto(producto)} className="mr-2 inline-flex items-center justify-center rounded border border-orange-600 bg-transparent px-2 py-1 text-sm text-orange-600 transition hover:bg-orange-600 hover:text-white">Editar</button>
+                    <button type="button" onClick={() => quitarProducto(producto)} className="inline-flex items-center justify-center rounded border border-[#dc3545] bg-transparent px-2 py-1 text-sm text-[#dc3545] transition hover:bg-[#dc3545] hover:text-white">Eliminar</button>
                   </td>
                 </tr>
               ))}
@@ -200,7 +200,7 @@ export function AdminPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
+      <section className="rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
         <div className="mb-4">
           <p className="mb-1 text-sm font-bold uppercase tracking-wider text-orange-600">Despachos</p>
           <h2 className="mb-1 text-2xl font-extrabold">Pedidos recibidos</h2>
@@ -210,8 +210,8 @@ export function AdminPage() {
           <p className="rounded-xl bg-orange-50 p-4 text-center text-gray-600">Aún no hay pedidos registrados.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="table table-hover align-middle mb-0">
-              <thead className="table-light">
+            <table className="admin-table mb-0">
+              <thead>
                 <tr><th>Pedido / cliente</th><th>Entrega</th><th>Productos</th><th>Total</th><th>Pago</th><th>Estado</th><th>Acción</th></tr>
               </thead>
               <tbody>
@@ -225,7 +225,7 @@ export function AdminPage() {
                     <td>{pedido.estado}</td>
                     <td>
                       {pedido.estadoPago === 'Aprobado' && pedido.estado !== 'Entregado' ? (
-                        <button type="button" onClick={() => cambiarEstadoPedido(pedido)} className="btn btn-outline-primary btn-sm">
+                        <button type="button" onClick={() => cambiarEstadoPedido(pedido)} className="inline-flex items-center justify-center rounded border border-orange-600 bg-transparent px-2 py-1 text-sm text-orange-600 transition hover:bg-orange-600 hover:text-white">
                           {pedido.estado === 'Pendiente' ? 'Despachar' : 'Marcar entregado'}
                         </button>
                       ) : pedido.estado === 'Entregado' ? 'Completado' : 'Sin acción'}

@@ -34,10 +34,10 @@ const compromisos = [
 
 export function NosotrosPage() {
   return (
-    <main className="container-fluid page-content flex-grow px-3 px-lg-5 py-4 py-lg-5">
+    <main className="mx-auto page-content flex-grow px-3 py-4">
       <section className="page-banner mb-5 overflow-hidden rounded-3xl text-white shadow-lg">
-        <div className="row align-items-center g-0">
-          <div className="col-12 col-lg-7 p-4 p-md-5 p-xl-6">
+        <div className="grid grid-cols-1 items-center min-[992px]:grid-cols-12">
+          <div className="p-4">
             <p className="mb-2 text-sm font-bold uppercase tracking-wider text-orange-200">
               Gas El Volcán · Chillán
             </p>
@@ -48,29 +48,29 @@ export function NosotrosPage() {
               Somos una empresa familiar que lleva calor y tranquilidad a los
               hogares de Chillán y la Región de Ñuble.
             </p>
-            <a href="#nuestra-historia" className="btn btn-light rounded-pill px-4 py-2 font-bold text-orange-700">
+            <a href="#nuestra-historia" className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-gray-50 px-4 py-2 font-bold text-orange-700 transition hover:bg-gray-100">
               Conoce nuestra historia
             </a>
           </div>
-          <div className="col-12 col-lg-5">
+          <div>
             <img
               src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=85"
               alt="Centro de distribución y logística"
-              className="h-64 w-100 object-cover md:h-80 lg:h-[390px]"
+              className="h-64 w-full object-cover md:h-80 lg:h-[390px]"
             />
           </div>
         </div>
       </section>
 
-      <section id="nuestra-historia" className="mb-5 rounded-3xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
-        <div className="row align-items-center g-4 g-lg-5">
-          <div className="col-12 col-lg-5">
+      <section id="nuestra-historia" className="mb-5 rounded-3xl border border-orange-100 bg-white p-4 shadow-sm">
+        <div className="grid grid-cols-1 items-center gap-6 min-[992px]:grid-cols-[5fr_7fr] min-[992px]:gap-12">
+          <div>
             <p className="mb-2 text-sm font-bold uppercase tracking-wider text-orange-600">Quiénes somos</p>
             <h2 className="mb-0 text-2xl font-extrabold text-gray-900 md:text-3xl">
               Un servicio local, hecho con compromiso
             </h2>
           </div>
-          <div className="col-12 col-lg-7">
+          <div>
             <p className="mb-3 text-gray-600">
               <strong className="text-gray-900">Gas El Volcán</strong> nació en
               Chillán como un emprendimiento familiar, con una idea sencilla:
@@ -85,11 +85,11 @@ export function NosotrosPage() {
         </div>
       </section>
 
-      <section aria-label="Nuestra misión y visión" className="row g-4 mb-5">
+      <section aria-label="Nuestra misión y visión" className="mb-5 grid grid-cols-1 gap-6 min-[768px]:grid-cols-2">
         {valores.map((valor) => (
-          <article className="col-12 col-md-6" key={valor.numero}>
-            <div className="h-full rounded-2xl border border-orange-100 bg-white p-4 p-md-5 shadow-sm">
-              <span className="mb-3 inline-flex rounded-pill bg-orange-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-orange-800">
+          <article key={valor.numero}>
+            <div className="h-full rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
+              <span className="mb-3 inline-flex rounded-full bg-orange-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-orange-800">
                 {valor.numero} · Gas El Volcán
               </span>
               <h2 className="mb-2 text-xl font-extrabold text-gray-900">{valor.titulo}</h2>
@@ -109,15 +109,15 @@ export function NosotrosPage() {
             Detrás de cada entrega hay personas comprometidas con hacer las cosas bien.
           </p>
         </div>
-        <div className="row g-4">
+        <div className="grid grid-cols-1 gap-6 min-[768px]:grid-cols-2 min-[1200px]:grid-cols-3">
           {compromisos.map((compromiso) => (
-            <article className="col-12 col-md-6 col-xl-4" key={compromiso.titulo}>
+            <article key={compromiso.titulo}>
               <div className="h-full overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
                 <img
                   src={compromiso.imagen}
                   alt={compromiso.alt}
                   loading="lazy"
-                  className="h-56 w-100 object-cover"
+                  className="h-56 w-full object-cover"
                 />
                 <div className="p-4">
                   <h3 className="mb-2 text-lg font-bold text-gray-900">{compromiso.titulo}</h3>
