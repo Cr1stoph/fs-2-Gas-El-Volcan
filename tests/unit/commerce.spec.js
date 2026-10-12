@@ -21,6 +21,7 @@ import {
   updateProducto,
 } from '../../src/data/mockDb';
 import { guardarPerfilCliente, getPerfilCliente } from '../../src/data/profile';
+import { getSesionDemo, iniciarSesionDemo } from '../../src/data/demoAuth';
 
 const checkoutValido = {
   nombre: 'Ana Pérez',
@@ -169,6 +170,27 @@ describe('Perfil de compra', () => {
 
   it('entrega un perfil vacío cuando no hay datos guardados', () => {
     expect(getPerfilCliente()).toEqual({ nombre: '', correo: '', telefono: '' });
+  });
+});
+
+describe('Inicio de sesión de demostración', () => {
+  beforeEach(() => sessionStorage.clear());
+
+  it('dirige la cuenta administradora a un rol separado', () => {
+    expect(iniciarSesionDemo(' Admin@Gmail.com ')).toEqual({
+      correo: 'admin@gmail.com',
+      rol: 'admin',
+    });
+    expect(getSesionDemo().rol).toBe('admin');
+  });
+
+  it('clasifica el resto de correos como clientes', () => {
+    expect(iniciarSesionDemo('cliente@gmail.com').rol).toBe('cliente');
+    expect(getSesionDemo().correo).toBe('cliente@gmail.com');
+  });
+
+  it('no crea sesión si no se ha iniciado sesión', () => {
+    expect(getSesionDemo()).toBeNull();
   });
 });
 
