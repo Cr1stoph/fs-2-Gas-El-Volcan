@@ -26,8 +26,15 @@ npm run build
 ```
 
 Karma genera el informe HTML de cobertura en `coverage/` y lo excluye Git. En
-Windows, si no tienes Chrome instalado, puedes indicar la ruta de Edge antes de
-ejecutar las pruebas:
+macOS, si no tienes Chrome instalado, puedes descargar Chrome for Testing y
+apuntarle a Karma con `CHROME_BIN`:
+
+```bash
+npx --yes @puppeteer/browsers install chrome@stable --path "$HOME/Library/Caches/puppeteer"
+CHROME_BIN="$(find "$HOME/Library/Caches/puppeteer/chrome" -type f -path '*/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing' -print -quit)" npm test
+```
+
+En Windows, si no tienes Chrome instalado, puedes indicar la ruta de Edge:
 
 ```powershell
 $env:CHROME_BIN = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
