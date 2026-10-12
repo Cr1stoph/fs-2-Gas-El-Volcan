@@ -34,10 +34,10 @@ const compromisos = [
 
 export function NosotrosPage() {
   return (
-    <main className="mx-auto page-content flex-grow px-3 py-4">
+    <main className="mx-auto page-content flex-grow px-3 py-4 min-[992px]:px-12 min-[992px]:py-12">
       <section className="page-banner mb-5 overflow-hidden rounded-3xl text-white shadow-lg">
-        <div className="grid grid-cols-1 items-center min-[992px]:grid-cols-12">
-          <div className="p-4">
+        <div className="grid grid-cols-1 items-center min-[992px]:grid-cols-[7fr_5fr]">
+          <div className="p-4 min-[768px]:p-8 min-[1200px]:p-12">
             <p className="mb-2 text-sm font-bold uppercase tracking-wider text-orange-200">
               Gas El Volcán · Chillán
             </p>
@@ -62,7 +62,7 @@ export function NosotrosPage() {
         </div>
       </section>
 
-      <section id="nuestra-historia" className="mb-5 rounded-3xl border border-orange-100 bg-white p-4 shadow-sm">
+      <section id="nuestra-historia" className="mb-5 rounded-3xl border border-orange-100 bg-white p-4 shadow-sm min-[768px]:p-12">
         <div className="grid grid-cols-1 items-center gap-6 min-[992px]:grid-cols-[5fr_7fr] min-[992px]:gap-12">
           <div>
             <p className="mb-2 text-sm font-bold uppercase tracking-wider text-orange-600">Quiénes somos</p>
@@ -88,7 +88,7 @@ export function NosotrosPage() {
       <section aria-label="Nuestra misión y visión" className="mb-5 grid grid-cols-1 gap-6 min-[768px]:grid-cols-2">
         {valores.map((valor) => (
           <article key={valor.numero}>
-            <div className="h-full rounded-2xl border border-orange-100 bg-white p-4 shadow-sm">
+            <div className="h-full rounded-2xl border border-orange-100 bg-white p-4 shadow-sm min-[768px]:p-12">
               <span className="mb-3 inline-flex rounded-full bg-orange-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-orange-800">
                 {valor.numero} · Gas El Volcán
               </span>
