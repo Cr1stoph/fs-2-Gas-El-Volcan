@@ -14,8 +14,13 @@ explorar productos, gestionar un carrito y simular un pedido de gas en Chillán.
 
 ```bash
 npm ci
+copy .env.example .env
 npm run dev
 ```
+
+El frontend consume el backend mediante `VITE_API_URL`, cuyo valor local por
+defecto es `http://localhost:8080/api`. Para producción se debe cambiar por la
+URL pública del backend en EC2.
 
 ## Comprobaciones
 
@@ -58,9 +63,9 @@ y la última medición se encuentra en [docs/cobertura-pruebas.md](./docs/cobert
   actualizar su estado.
 - Perfiles de compra guardados en el navegador. Las contraseñas no se guardan.
 
-Esta versión es un prototipo académico: usa `localStorage` como persistencia
-local, no tiene servidor, autenticación real, cobros ni envío de formularios.
-El panel administrativo no debe considerarse protegido para producción.
+El carrito y el perfil de compra se conservan en el navegador. El catálogo,
+usuarios y pedidos se guardan en la base de datos del backend. El pago sigue
+siendo una simulación académica: no se realizan cobros reales.
 
 ## Publicación en GitHub Pages
 
@@ -69,6 +74,9 @@ dependencias, ejecuta lint y build, y publica `dist` en GitHub Pages. En la
 configuración del repositorio, Pages debe usar **GitHub Actions** como fuente
 de publicación. Vite configura la ruta base del repositorio y `404.html`
 permite abrir directamente las rutas internas de la aplicación.
+Para producción, configura el secreto `VITE_API_URL` del repositorio con la
+URL pública del backend, por ejemplo `http://IP_PUBLICA_EC2:8080/api` o,
+preferentemente, una URL HTTPS detrás de un reverse proxy.
 
 ## Estructura de `src`
 

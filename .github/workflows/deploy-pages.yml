@@ -38,6 +38,8 @@ jobs:
         run: npm run lint
 
       - name: Build site
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: npm run build
 
       - name: Add SPA route fallback
