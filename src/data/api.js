@@ -5,6 +5,7 @@ import flexibleImagen from '../assets/flexible.svg';
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api';
 const TOKEN_KEY = 'gas-volcan:access-token';
 const SESSION_KEY = 'gas-volcan:session';
+export const AUTH_CHANGED_EVENT = 'gas-volcan:auth-changed';
 
 function imagenProducto(nombre = '') {
   const archivo = nombre.toLocaleLowerCase('es-CL');
@@ -44,6 +45,7 @@ export function guardarSesion(auth) {
     nombre: auth.username,
     rol: auth.role,
   }));
+  window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
   return auth;
 }
 
@@ -61,6 +63,7 @@ export function getSesion() {
 export function cerrarSesion() {
   sessionStorage.removeItem(TOKEN_KEY);
   sessionStorage.removeItem(SESSION_KEY);
+  window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
 }
 
 export async function iniciarSesion(correo, password) {

@@ -1,6 +1,7 @@
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { AUTH_CHANGED_EVENT, cerrarSesion, getSesion } from '../data/api';
 
 const enlaces = [
   { to: '/categorias', texto: 'Productos' },
@@ -11,8 +12,22 @@ const enlaces = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [sesion, setSesion] = useState(getSesion);
   const { itemCount } = useContext(CartContext);
+  const navigate = useNavigate();
   const cerrarMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    const actualizarSesion = () => setSesion(getSesion());
+    window.addEventListener(AUTH_CHANGED_EVENT, actualizarSesion);
+    return () => window.removeEventListener(AUTH_CHANGED_EVENT, actualizarSesion);
+  }, []);
+
+  const salir = () => {
+    cerrarSesion();
+    cerrarMenu();
+    navigate('/');
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-orange-700/30 bg-orange-600 text-white shadow-md">
@@ -47,9 +62,25 @@ export function Header() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <Link to="/login" className="hidden rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white no-underline transition hover:bg-white/25 lg:inline-flex">
-            Iniciar sesión
-          </Link>
+          {sesion ? (
+            <div className="hidden items-center gap-2 lg:flex">
+              <span className="max-w-36 truncate text-sm font-semibold" title={sesion.nombre || sesion.correo}>
+                👤 {sesion.nombre || sesion.correo}
+              </span>
+              {sesion.rol === 'ROLE_ADMIN' && (
+                <Link to="/admin" className="rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white no-underline transition hover:bg-white/25">
+                  Administración
+                </Link>
+              )}
+              <button type="button" onClick={salir} className="rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white transition hover:bg-white/25">
+                Cerrar sesión
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="hidden rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white no-underline transition hover:bg-white/25 lg:inline-flex">
+              Iniciar sesión
+            </Link>
+          )}
         </div>
       </div>
 
@@ -61,9 +92,25 @@ export function Header() {
                 {enlace.texto}
               </Link>
             ))}
-            <Link className="block rounded-lg px-3 py-2.5 font-semibold text-orange-100 no-underline hover:bg-orange-700" to="/login" onClick={cerrarMenu}>
-              Iniciar sesión
-            </Link>
+            {sesion ? (
+              <>
+                <div className="px-3 py-2.5 font-semibold text-orange-100">
+                  👤 {sesion.nombre || sesion.correo}
+                </div>
+                {sesion.rol === 'ROLE_ADMIN' && (
+                  <Link className="block rounded-lg px-3 py-2.5 font-semibold text-white no-underline hover:bg-orange-700" to="/admin" onClick={cerrarMenu}>
+                    Administración
+                  </Link>
+                )}
+                <button type="button" onClick={salir} className="block w-full rounded-lg px-3 py-2.5 text-left font-semibold text-orange-100 hover:bg-orange-700">
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <Link className="block rounded-lg px-3 py-2.5 font-semibold text-orange-100 no-underline hover:bg-orange-700" to="/login" onClick={cerrarMenu}>
+                Iniciar sesión
+              </Link>
+            )}
           </div>
         </nav>
       )}
