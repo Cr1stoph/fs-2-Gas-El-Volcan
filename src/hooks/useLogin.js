@@ -1,17 +1,25 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { iniciarSesionDemo } from '../data/demoAuth';
 
 export function useLogin() {
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (e) => {
+  const [error, setError] = useState('');
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const formulario = new FormData(e.currentTarget);
-    const sesion = iniciarSesionDemo(formulario.get('correo'));
-    navigate(sesion.rol === 'admin' ? '/admin' : '/categorias', { replace: true });
+    setError('');
+    try {
+      const sesion = await iniciarSesionDemo(formulario.get('correo'), formulario.get('password'));
+      navigate(sesion.role === 'ROLE_ADMIN' ? '/admin' : '/categorias', { replace: true });
+    } catch (exception) {
+      setError(exception.message);
+    }
   };
 
   const goBack = () => navigate(-1); // Función extra por si quieres un botón de volver
 
-  return { handleLoginSubmit, goBack };
+  return { handleLoginSubmit, goBack, error };
 }

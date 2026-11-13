@@ -1,20 +1,32 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { registrarUsuario } from '../data/api';
 import { guardarPerfilCliente } from '../data/profile';
 
 export function RegistroPage() {
   const [guardado, setGuardado] = useState(false);
+  const [error, setError] = useState('');
 
-  const registrarPerfil = (event) => {
+  const registrarPerfil = async (event) => {
     event.preventDefault();
     const formulario = new FormData(event.currentTarget);
-    guardarPerfilCliente({
-      nombre: formulario.get('nombre'),
-      correo: formulario.get('correo'),
-      telefono: formulario.get('telefono'),
-    });
-    setGuardado(true);
-    event.currentTarget.reset();
+    setError('');
+    try {
+      await registrarUsuario({
+        username: formulario.get('username'),
+        email: formulario.get('correo'),
+        password: formulario.get('contrasena'),
+      });
+      guardarPerfilCliente({
+        nombre: formulario.get('nombre'),
+        correo: formulario.get('correo'),
+        telefono: formulario.get('telefono'),
+      });
+      setGuardado(true);
+      event.currentTarget.reset();
+    } catch (exception) {
+      setError(exception.message);
+    }
   };
 
   return (
@@ -28,6 +40,10 @@ export function RegistroPage() {
 
         <form onSubmit={registrarPerfil}>
           <div className="mb-3">
+            <label htmlFor="registro-username" className="mb-2 block font-semibold">Nombre de usuario</label>
+            <input id="registro-username" name="username" autoComplete="username" required />
+          </div>
+          <div className="mb-3">
             <label htmlFor="registro-nombre" className="mb-2 block font-semibold">Nombre completo</label>
             <input id="registro-nombre" name="nombre" autoComplete="name" required />
           </div>
@@ -40,10 +56,11 @@ export function RegistroPage() {
             <input id="registro-telefono" name="telefono" type="tel" autoComplete="tel" required />
           </div>
           <div className="mb-4">
-            <label htmlFor="registro-contrasena" className="mb-2 block font-semibold">Contraseña (solo demostración)</label>
+            <label htmlFor="registro-contrasena" className="mb-2 block font-semibold">Contraseña</label>
             <input id="registro-contrasena" name="contrasena" type="password" autoComplete="new-password" minLength="8" required />
-            <small className="text-gray-500">No guardamos contraseñas: esta versión de demostración no cuenta con autenticación de servidor.</small>
+            <small className="text-gray-500">La contraseña se almacena cifrada en el backend.</small>
           </div>
+          {error && <p className="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-2 text-red-800" role="alert">{error}</p>}
           {guardado && (
             <p className="mb-4 rounded-md border border-emerald-200 bg-emerald-100 px-4 py-2 text-emerald-900" role="status">
               Perfil guardado en este navegador. Tus datos se completarán en el checkout.

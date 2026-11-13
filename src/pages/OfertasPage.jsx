@@ -1,12 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { filtrarProductos } from '../data/commerce';
-import { getProductos } from '../data/mockDb';
+import { obtenerProductos } from '../data/api';
 import { ProductGrid } from '../core/ProductGrid';
 
 export function OfertasPage() {
   const { addToCart } = useContext(CartContext);
-  const ofertas = filtrarProductos(getProductos(), { soloOfertas: true });
+  const [productos, setProductos] = useState([]);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    obtenerProductos().then(setProductos).catch((exception) => setError(exception.message));
+  }, []);
+  const ofertas = filtrarProductos(productos, { soloOfertas: true });
 
   return (
     <main className="mx-auto page-content flex-grow px-3 py-5">
@@ -15,7 +20,7 @@ export function OfertasPage() {
         <h1 className="mb-2 text-3xl font-extrabold md:text-4xl">Ofertas de la tienda</h1>
         <p className="mb-0 text-orange-50">Aprovecha los descuentos vigentes en cilindros y accesorios.</p>
       </section>
-      <ProductGrid productos={ofertas} onAdd={addToCart} />
+      {error ? <p role="alert" className="text-red-700">{error}</p> : <ProductGrid productos={ofertas} onAdd={addToCart} />}
     </main>
   );
 }

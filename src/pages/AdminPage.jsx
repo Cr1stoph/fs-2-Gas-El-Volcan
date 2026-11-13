@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import cilindroImagen from '../assets/cilindro.svg';
 import reguladorImagen from '../assets/regulador.svg';
 import flexibleImagen from '../assets/flexible.svg';
 import {
-  createProducto,
-  deleteProducto,
-  getPedidos,
-  getProductos,
-  updateEstadoPedido,
-  updateProducto,
-} from '../data/mockDb';
+  avanzarPedido,
+  actualizarProducto,
+  crearProducto,
+  eliminarProducto,
+  obtenerPedidos,
+  obtenerProductos,
+} from '../data/api';
 
 const formularioVacio = {
   nombre: '',
@@ -26,22 +26,31 @@ function obtenerImagen(categoria, nombre) {
 }
 
 export function AdminPage() {
-  const [productos, setProductos] = useState(getProductos);
-  const [pedidos, setPedidos] = useState(getPedidos);
+  const [productos, setProductos] = useState([]);
+  const [pedidos, setPedidos] = useState([]);
   const [formulario, setFormulario] = useState(formularioVacio);
   const [productoEditando, setProductoEditando] = useState(null);
   const [mensaje, setMensaje] = useState('');
+  const [error, setError] = useState('');
+  useEffect(() => {
+    Promise.all([obtenerProductos(), obtenerPedidos()])
+      .then(([productosActuales, pedidosActuales]) => {
+        setProductos(productosActuales);
+        setPedidos(pedidosActuales);
+      })
+      .catch((exception) => setError(exception.message));
+  }, []);
   const ventas = pedidos
-    .filter((pedido) => pedido.estadoPago === 'Aprobado')
+    .filter((pedido) => pedido.estadoPago === 'APROBADO')
     .reduce((total, pedido) => total + pedido.total, 0);
-  const pedidosActivos = pedidos.filter((pedido) => pedido.estado === 'Pendiente' || pedido.estado === 'En camino').length;
+  const pedidosActivos = pedidos.filter((pedido) => pedido.estado === 'PENDIENTE' || pedido.estado === 'EN_CAMINO').length;
   const stockTotal = productos.reduce((total, producto) => total + producto.stock, 0);
 
   const actualizarCampo = (event) => {
     setFormulario((actual) => ({ ...actual, [event.target.name]: event.target.value }));
   };
 
-  const guardarProducto = (event) => {
+  const guardarProducto = async (event) => {
     event.preventDefault();
     const precio = Number(formulario.precio);
     const precioOferta = formulario.precioOferta ? Number(formulario.precioOferta) : null;
@@ -59,13 +68,13 @@ export function AdminPage() {
       img: obtenerImagen(formulario.categoria, formulario.nombre),
     };
     if (productoEditando !== null) {
-      updateProducto(productoEditando, datos);
+      await actualizarProducto(productoEditando, datos);
       setMensaje('Producto actualizado correctamente.');
     } else {
-      createProducto(datos);
+      await crearProducto(datos);
       setMensaje('Producto agregado correctamente.');
     }
-    setProductos(getProductos());
+    setProductos(await obtenerProductos());
     setFormulario(formularioVacio);
     setProductoEditando(null);
   };
@@ -82,17 +91,16 @@ export function AdminPage() {
     setMensaje('');
   };
 
-  const quitarProducto = (producto) => {
+  const quitarProducto = async (producto) => {
     if (!window.confirm(`¿Eliminar ${producto.nombre} del catálogo?`)) return;
-    deleteProducto(producto.id);
-    setProductos(getProductos());
+    await eliminarProducto(producto.id);
+    setProductos(await obtenerProductos());
     setMensaje('Producto eliminado del catálogo.');
   };
 
-  const cambiarEstadoPedido = (pedido) => {
-    const siguienteEstado = pedido.estado === 'Pendiente' ? 'En camino' : 'Entregado';
-    updateEstadoPedido(pedido.id, siguienteEstado);
-    setPedidos(getPedidos());
+  const cambiarEstadoPedido = async (pedido) => {
+    await avanzarPedido(pedido.id);
+    setPedidos(await obtenerPedidos());
   };
 
   const cancelarEdicion = () => {
@@ -137,7 +145,7 @@ export function AdminPage() {
         <div className="mb-4">
           <p className="mb-1 text-sm font-bold uppercase tracking-wider text-orange-600">Inventario</p>
           <h2 className="mb-1 text-2xl font-extrabold">Administrar productos</h2>
-          <p className="mb-0 text-sm text-gray-600">Los cambios quedan guardados en este navegador.</p>
+          <p className="mb-0 text-sm text-gray-600">Los cambios quedan guardados en la base de datos.</p>
         </div>
         <form onSubmit={guardarProducto} className="-mx-2 grid grid-cols-12 items-end gap-y-4 border-b border-orange-100 pb-5">
           <div className="col-span-12 px-2 min-[768px]:col-span-6 min-[1200px]:col-span-3">
@@ -175,6 +183,7 @@ export function AdminPage() {
           )}
         </form>
         {mensaje && <p className="mt-3 mb-0 rounded-md border border-sky-200 bg-sky-100 px-4 py-2 text-sky-900" role="status">{mensaje}</p>}
+        {error && <p className="mt-3 mb-0 rounded-md border border-red-200 bg-red-50 px-4 py-2 text-red-800" role="alert">{error}</p>}
 
         <div className="mt-4 overflow-x-auto">
           <table className="admin-table mb-0">
@@ -217,18 +226,18 @@ export function AdminPage() {
               <tbody>
                 {pedidos.map((pedido) => (
                   <tr key={pedido.id}>
-                    <td><strong>#{pedido.id}</strong><br /><span className="text-sm text-gray-600">{pedido.cliente.nombre}</span></td>
-                    <td>{pedido.tipoEntrega === 'retiro' ? 'Retiro en tienda' : pedido.cliente.direccion}</td>
+                    <td><strong>#{pedido.id}</strong><br /><span className="text-sm text-gray-600">{pedido.clienteNombre}</span></td>
+                    <td>{pedido.tipoEntrega === 'retiro' ? 'Retiro en tienda' : pedido.direccion}</td>
                     <td>{pedido.items.map((item) => `${item.cantidad} × ${item.nombre}`).join(', ')}</td>
                     <td className="font-bold">${pedido.total.toLocaleString('es-CL')}</td>
                     <td>{pedido.estadoPago}</td>
                     <td>{pedido.estado}</td>
                     <td>
-                      {pedido.estadoPago === 'Aprobado' && pedido.estado !== 'Entregado' ? (
+                      {pedido.estadoPago === 'APROBADO' && pedido.estado !== 'ENTREGADO' ? (
                         <button type="button" onClick={() => cambiarEstadoPedido(pedido)} className="inline-flex items-center justify-center rounded border border-orange-600 bg-transparent px-2 py-1 text-sm text-orange-600 transition hover:bg-orange-600 hover:text-white">
-                          {pedido.estado === 'Pendiente' ? 'Despachar' : 'Marcar entregado'}
+                          {pedido.estado === 'PENDIENTE' ? 'Despachar' : 'Marcar entregado'}
                         </button>
-                      ) : pedido.estado === 'Entregado' ? 'Completado' : 'Sin acción'}
+                      ) : pedido.estado === 'ENTREGADO' ? 'Completado' : 'Sin acción'}
                     </td>
                   </tr>
                 ))}

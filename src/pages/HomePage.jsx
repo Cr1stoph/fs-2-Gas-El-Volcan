@@ -1,12 +1,16 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
-import { getProductos } from '../data/mockDb';
+import { obtenerProductos } from '../data/api';
 import { ProductGrid } from '../core/ProductGrid';
 
 export function HomePage() {
   const { addToCart } = useContext(CartContext);
-  const productos = getProductos().slice(0, 3);
+  const [productos, setProductos] = useState([]);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    obtenerProductos().then((items) => setProductos(items.slice(0, 3))).catch((exception) => setError(exception.message));
+  }, []);
   const [contactoEnviado, setContactoEnviado] = useState(false);
 
   const enviarContacto = (event) => {
@@ -50,7 +54,7 @@ export function HomePage() {
             Ver todo el catálogo →
           </Link>
         </div>
-        <ProductGrid productos={productos} onAdd={addToCart} />
+        {error ? <p role="alert" className="text-red-700">{error}</p> : <ProductGrid productos={productos} onAdd={addToCart} />}
       </section>
 
       <section className="my-8 rounded-3xl bg-orange-100 p-6 md:p-9">

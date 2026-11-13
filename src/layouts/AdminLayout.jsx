@@ -4,7 +4,7 @@ import { Header } from '../core/Header';
 import { getSesionDemo } from '../data/demoAuth';
 
 export function AdminLayout() {
-  if (getSesionDemo()?.rol !== 'admin') {
+  if (getSesionDemo()?.rol !== 'ROLE_ADMIN') {
     return <Navigate to="/login" replace />;
   }
 

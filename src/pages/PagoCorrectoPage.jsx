@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getPedidoById } from '../data/mockDb';
+import { obtenerPedido } from '../data/api';
 
 export function PagoCorrectoPage() {
   const { pedidoId } = useParams();
-  const pedido = pedidoId ? getPedidoById(pedidoId) : null;
+  const [pedido, setPedido] = useState(null);
+  useEffect(() => {
+    if (pedidoId) obtenerPedido(pedidoId).then(setPedido).catch(() => setPedido(null));
+  }, [pedidoId]);
 
   return (
     <main className="mx-auto page-content flex-grow px-3 py-5">
@@ -30,7 +34,7 @@ export function PagoCorrectoPage() {
                 ))}
               </div>
               <div className="space-y-2 border-t border-orange-100 pt-3 text-sm">
-                <div className="flex justify-between"><span>Entrega</span><span>{pedido.tipoEntrega === 'retiro' ? 'Retiro en tienda' : pedido.cliente.direccion}</span></div>
+                <div className="flex justify-between"><span>Entrega</span><span>{pedido.tipoEntrega === 'retiro' ? 'Retiro en tienda' : pedido.direccion}</span></div>
                 <div className="flex justify-between"><span>Despacho</span><span>{pedido.despacho ? `$${pedido.despacho.toLocaleString('es-CL')}` : 'Gratis'}</span></div>
                 <div className="flex justify-between text-lg font-extrabold"><span>Total</span><span className="text-orange-700">${pedido.total.toLocaleString('es-CL')}</span></div>
               </div>

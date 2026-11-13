@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getPedidoById } from '../data/mockDb';
+import { obtenerPedido } from '../data/api';
 
 export function PagoFallidoPage() {
   const { pedidoId } = useParams();
-  const pedido = pedidoId ? getPedidoById(pedidoId) : null;
+  const [pedido, setPedido] = useState(null);
+  useEffect(() => {
+    if (pedidoId) obtenerPedido(pedidoId).then(setPedido).catch(() => setPedido(null));
+  }, [pedidoId]);
 
   return (
     <main className="mx-auto page-content flex-grow px-3 py-5">

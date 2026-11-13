@@ -3,7 +3,7 @@ import { useLogin } from '../hooks/useLogin';
 
 export function LoginPage() {
   // Extraemos la función desde nuestro custom hook
-  const { handleLoginSubmit } = useLogin();
+  const { handleLoginSubmit, error } = useLogin();
 
   return (
     <main className="container mx-auto px-4 py-12 flex items-center justify-center flex-grow">
@@ -41,8 +41,10 @@ export function LoginPage() {
             Ingresar
           </button>
         </form>
+        {error && <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800" role="alert">{error}</p>}
         <p className="mt-3 text-center text-xs text-gray-500">
-          En esta demostración no se verifican contraseñas. Usa admin@gmail.com para el panel administrador; cualquier otro correo abre la tienda.
+          Usa las credenciales creadas en el backend. El usuario administrador inicial es
+          `admin@gasvolcan.cl` con contraseña `admin123`.
         </p>
 
         <div className="mt-6 pt-6 border-t border-gray-100 text-center">

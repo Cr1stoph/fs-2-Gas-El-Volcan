@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
-import { calcularTotal, COSTO_DESPACHO, getPrecioProducto, pagoAprobado, validarCheckout } from '../data/commerce';
-import { createPedido } from '../data/mockDb';
+import { calcularTotal, COSTO_DESPACHO, getPrecioProducto, validarCheckout } from '../data/commerce';
+import { crearPedido } from '../data/api';
 import { getPerfilCliente } from '../data/profile';
 
 export function CheckoutPage() {
@@ -12,10 +12,11 @@ export function CheckoutPage() {
   const [tipoEntrega, setTipoEntrega] = useState('despacho');
   const [formaPago, setFormaPago] = useState('contraentrega');
   const [errores, setErrores] = useState({});
+  const [errorApi, setErrorApi] = useState('');
   const despacho = tipoEntrega === 'despacho' ? COSTO_DESPACHO : 0;
   const total = calcularTotal(cart, despacho);
 
-  const confirmarCompra = (event) => {
+  const confirmarCompra = async (event) => {
     event.preventDefault();
     const formulario = new FormData(event.currentTarget);
     const datos = Object.fromEntries(formulario.entries());
@@ -26,31 +27,26 @@ export function CheckoutPage() {
     setErrores(nuevosErrores);
     if (Object.keys(nuevosErrores).length > 0 || cart.length === 0) return;
 
-    const aprobado = pagoAprobado(datos);
-    const pedido = createPedido({
-      cliente: {
-        nombre: datos.nombre.trim(),
-        correo: datos.correo.trim(),
-        telefono: datos.telefono.trim(),
-        direccion: tipoEntrega === 'despacho' ? datos.direccion.trim() : 'Retiro en tienda',
-      },
+    setErrorApi('');
+    try {
+      const pedido = await crearPedido({
+      nombre: datos.nombre.trim(),
+      correo: datos.correo.trim(),
+      telefono: datos.telefono.trim(),
+      direccion: tipoEntrega === 'despacho' ? datos.direccion.trim() : null,
       tipoEntrega,
       formaPago,
+      numeroTarjeta: datos.numeroTarjeta || null,
       items: cart.map((item) => ({
-        id: item.id,
-        nombre: item.nombre,
-        precio: getPrecioProducto(item),
+      productoId: item.id,
         cantidad: item.cantidad,
       })),
-      subtotal: calcularTotal(cart),
-      despacho,
-      total,
-      estadoPago: aprobado ? 'Aprobado' : 'Rechazado',
-      estado: aprobado ? 'Pendiente' : 'Pago rechazado',
-    });
-
-    if (aprobado) clearCart();
-    navigate(`/pago-${aprobado ? 'correcto' : 'fallido'}/${pedido.id}`);
+      });
+      if (pedido.estadoPago === 'APROBADO') clearCart();
+      navigate(`/pago-${pedido.estadoPago === 'APROBADO' ? 'correcto' : 'fallido'}/${pedido.id}`);
+    } catch (exception) {
+      setErrorApi(exception.message);
+    }
   };
 
   if (cart.length === 0) {
@@ -174,6 +170,7 @@ export function CheckoutPage() {
               <button type="submit" className="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-3 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">
                 Confirmar y pagar
               </button>
+              {errorApi && <p className="mt-3 text-center text-sm text-red-700" role="alert">{errorApi}</p>}
               <p className="mt-3 mb-0 text-center text-xs text-gray-500">La tarjeta es una simulación de prueba; no se realizan cobros.</p>
             </section>
           </aside>

@@ -1,15 +1,20 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/CartContext';
-import { getCategorias, getProductos } from '../data/mockDb';
+import { obtenerProductos } from '../data/api';
 import { filtrarProductos } from '../data/commerce';
 import { ProductGrid } from '../core/ProductGrid';
 
 export function CategoriasPage() {
   const { addToCart } = useContext(CartContext);
+  const [productosBase, setProductosBase] = useState([]);
+  const [error, setError] = useState('');
   const [categoria, setCategoria] = useState('');
   const [busqueda, setBusqueda] = useState('');
-  const categorias = getCategorias();
-  const productos = filtrarProductos(getProductos(), { categoria, busqueda });
+  useEffect(() => {
+    obtenerProductos().then(setProductosBase).catch((exception) => setError(exception.message));
+  }, []);
+  const categorias = [...new Set(productosBase.map((producto) => producto.categoria))].sort();
+  const productos = filtrarProductos(productosBase, { categoria, busqueda });
 
   return (
     <main className="mx-auto page-content flex-grow px-3 py-5">
@@ -47,7 +52,7 @@ export function CategoriasPage() {
           </p>
         </div>
       </section>
-      <ProductGrid productos={productos} onAdd={addToCart} />
+      {error ? <p role="alert" className="text-red-700">{error}</p> : <ProductGrid productos={productos} onAdd={addToCart} />}
     </main>
   );
 }
