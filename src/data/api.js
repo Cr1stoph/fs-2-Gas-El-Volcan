@@ -2,7 +2,7 @@ import cilindroImagen from '../assets/cilindro.svg';
 import reguladorImagen from '../assets/regulador.svg';
 import flexibleImagen from '../assets/flexible.svg';
 
-const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api';
+const API_BASE = import.meta.env.VITE_API_URL ?? '/api';
 const TOKEN_KEY = 'gas-volcan:access-token';
 const SESSION_KEY = 'gas-volcan:session';
 export const AUTH_CHANGED_EVENT = 'gas-volcan:auth-changed';
@@ -15,7 +15,7 @@ function imagenProducto(nombre = '') {
 }
 
 async function request(path, options = {}) {
-  const token = sessionStorage.getItem(TOKEN_KEY);
+  const token = localStorage.getItem(TOKEN_KEY);
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
@@ -39,8 +39,8 @@ async function request(path, options = {}) {
 }
 
 export function guardarSesion(auth) {
-  sessionStorage.setItem(TOKEN_KEY, auth.token);
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+  localStorage.setItem(TOKEN_KEY, auth.token);
+  localStorage.setItem(SESSION_KEY, JSON.stringify({
     correo: auth.email,
     nombre: auth.username,
     rol: auth.role,
@@ -50,19 +50,19 @@ export function guardarSesion(auth) {
 }
 
 export function getSesion() {
-  const raw = sessionStorage.getItem(SESSION_KEY);
+  const raw = localStorage.getItem(SESSION_KEY);
   if (!raw) return null;
   try {
     return JSON.parse(raw);
   } catch {
-    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
     return null;
   }
 }
 
 export function cerrarSesion() {
-  sessionStorage.removeItem(TOKEN_KEY);
-  sessionStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(SESSION_KEY);
   window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
 }
 

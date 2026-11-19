@@ -72,6 +72,11 @@ export function Header() {
                   Administración
                 </Link>
               )}
+              {sesion.rol === 'ROLE_VENDEDOR' && (
+                <Link to="/vendedor" className="rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white no-underline transition hover:bg-white/25">
+                  Panel vendedor
+                </Link>
+              )}
               <button type="button" onClick={salir} className="rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white transition hover:bg-white/25">
                 Cerrar sesión
               </button>
@@ -100,6 +105,11 @@ export function Header() {
                 {sesion.rol === 'ROLE_ADMIN' && (
                   <Link className="block rounded-lg px-3 py-2.5 font-semibold text-white no-underline hover:bg-orange-700" to="/admin" onClick={cerrarMenu}>
                     Administración
+                  </Link>
+                )}
+                {sesion.rol === 'ROLE_VENDEDOR' && (
+                  <Link className="block rounded-lg px-3 py-2.5 font-semibold text-white no-underline hover:bg-orange-700" to="/vendedor" onClick={cerrarMenu}>
+                    Panel vendedor
                   </Link>
                 )}
                 <button type="button" onClick={salir} className="block w-full rounded-lg px-3 py-2.5 text-left font-semibold text-orange-100 hover:bg-orange-700">

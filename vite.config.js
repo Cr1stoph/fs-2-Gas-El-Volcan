@@ -5,7 +5,9 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/fs-2-Gas-El-Volcan/' : '/',
+  // En GitHub Pages el sitio vive en /fs-2-Gas-El-Volcan/;
+  // en el EC2 se sirve en la raíz, por eso se puede sobreescribir con VITE_BASE_PATH.
+  base: process.env.VITE_BASE_PATH ?? (command === 'build' ? '/fs-2-Gas-El-Volcan/' : '/'),
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),

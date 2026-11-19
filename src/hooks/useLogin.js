@@ -13,7 +13,13 @@ export function useLogin() {
     setError('');
     try {
       const sesion = await iniciarSesionDemo(formulario.get('correo'), formulario.get('password'));
-      navigate(sesion.role === 'ROLE_ADMIN' ? '/admin' : '/categorias', { replace: true });
+      if (sesion.role === 'ROLE_ADMIN') {
+        navigate('/admin', { replace: true });
+      } else if (sesion.role === 'ROLE_VENDEDOR') {
+        navigate('/vendedor', { replace: true });
+      } else {
+        navigate('/categorias', { replace: true });
+      }
     } catch (exception) {
       setError(exception.message);
     }

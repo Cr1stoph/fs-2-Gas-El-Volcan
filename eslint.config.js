@@ -19,6 +19,12 @@ export default defineConfig([
     },
   },
   {
+    files: ['vite.config.js', 'karma.conf.cjs', 'postcss.config.js', 'tailwind.config.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
     files: ['tests/**/*.spec.js'],
     languageOptions: {
       globals: {
