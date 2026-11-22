@@ -8,6 +8,7 @@ import {
   obtenerProductos,
   getSesion,
 } from '../data/api';
+import { etiquetaEstado, etiquetaPago } from '../data/estados';
 
 function obtenerImagen(nombre = '') {
   const n = nombre.toLocaleLowerCase('es-CL');
@@ -15,12 +16,6 @@ function obtenerImagen(nombre = '') {
   if (n.includes('regulador')) return reguladorImagen;
   return cilindroImagen;
 }
-
-const ETIQUETA_ESTADO = {
-  PENDIENTE: { texto: 'Pendiente', clase: 'bg-yellow-100 text-yellow-800' },
-  EN_CAMINO: { texto: 'En camino', clase: 'bg-blue-100 text-blue-800' },
-  ENTREGADO: { texto: 'Entregado', clase: 'bg-green-100 text-green-800' },
-};
 
 export function VendedorPage() {
   const sesion = getSesion();
@@ -54,16 +49,13 @@ export function VendedorPage() {
             </p>
             <h1 className="mb-2 text-3xl font-extrabold">Gas El Volcán</h1>
             <p className="mb-0 text-orange-50">
-              Hola, <strong>{sesion?.nombre}</strong>. Gestiona los pedidos y
-              consulta el catálogo.
+              Hola, <strong>{sesion?.nombre}</strong>. Consulta los pedidos y el
+              catálogo. Tu perfil es de solo lectura.
             </p>
           </div>
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-gray-50 px-4 py-1.5 font-bold leading-6 text-orange-700 transition hover:bg-gray-100"
-          >
-            Ir a la tienda
-          </Link>
+          <span className="inline-flex items-center justify-center rounded-full border border-white/40 bg-white/15 px-4 py-1.5 font-bold leading-6 text-white">
+            🔒 Modo consulta
+          </span>
         </div>
       </section>
 
@@ -140,10 +132,8 @@ export function VendedorPage() {
               </thead>
               <tbody>
                 {pedidos.map((pedido) => {
-                  const etiqueta = ETIQUETA_ESTADO[pedido.estado] ?? {
-                    texto: pedido.estado,
-                    clase: 'bg-gray-100 text-gray-700',
-                  };
+                  const etiqueta = etiquetaEstado(pedido.estado);
+                  const pago = etiquetaPago(pedido.estadoPago);
                   return (
                     <tr key={pedido.id}>
                       <td>
@@ -166,7 +156,11 @@ export function VendedorPage() {
                       <td className="font-bold">
                         ${pedido.total.toLocaleString('es-CL')}
                       </td>
-                      <td>{pedido.estadoPago}</td>
+                      <td>
+                        <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${pago.clase}`}>
+                          {pago.texto}
+                        </span>
+                      </td>
                       <td>
                         <span
                           className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiqueta.clase}`}

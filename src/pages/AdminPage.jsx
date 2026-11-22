@@ -12,6 +12,7 @@ import {
   obtenerPedidos,
   obtenerProductos,
 } from '../data/api';
+import { etiquetaEstado, etiquetaPago } from '../data/estados';
 
 const formularioVacio = {
   nombre: '',
@@ -252,8 +253,16 @@ export function AdminPage() {
                     <td>{pedido.tipoEntrega === 'retiro' ? 'Retiro en tienda' : pedido.direccion}</td>
                     <td>{pedido.items.map((item) => `${item.cantidad} × ${item.nombre}`).join(', ')}</td>
                     <td className="font-bold">${pedido.total.toLocaleString('es-CL')}</td>
-                    <td>{pedido.estadoPago}</td>
-                    <td>{pedido.estado}</td>
+                    <td>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiquetaPago(pedido.estadoPago).clase}`}>
+                        {etiquetaPago(pedido.estadoPago).texto}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiquetaEstado(pedido.estado).clase}`}>
+                        {etiquetaEstado(pedido.estado).texto}
+                      </span>
+                    </td>
                     <td>
                       {pedido.estadoPago === 'APROBADO' && pedido.estado !== 'ENTREGADO' ? (
                         <button type="button" onClick={() => cambiarEstadoPedido(pedido)} className="inline-flex items-center justify-center rounded border border-orange-600 bg-transparent px-2 py-1 text-sm text-orange-600 transition hover:bg-orange-600 hover:text-white">

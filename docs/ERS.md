@@ -37,7 +37,7 @@ El sistema implementa un flujo completo de comercio electrónico con:
 | Actor | Descripción |
 |-------|-------------|
 | **Cliente** | Usuario registrado. Consulta el catálogo, gestiona su carrito y realiza pedidos. |
-| **Vendedor** | Usuario interno. Visualiza el catálogo y gestiona el estado de los pedidos (despacho). No puede crear ni eliminar productos. |
+| **Vendedor** | Usuario interno. Visualiza el catálogo y consulta pedidos (despacho). No puede crear, editar, eliminar productos ni cambiar estados. |
 | **Administrador** | Usuario con acceso total. Gestiona productos (CRUD), revisa y avanza todos los pedidos. |
 | **Sistema** | Spring Boot + MySQL. Persiste datos, valida tokens, aplica reglas de negocio. |
 | **GitHub Actions** | Pipeline CI/CD que compila, prueba y despliega automáticamente al hacer push a `main`. |
@@ -133,9 +133,9 @@ el nombre del cliente, productos, total, estado de pago y estado de despacho.
 
 ---
 
-### RF-09 · Avance de estado de pedido (Administrador y Vendedor)
+### RF-09 · Avance de estado de pedido (Administrador)
 
-El Administrador y el Vendedor avanzan el estado de un pedido aprobado:
+El Administrador avanza el estado de un pedido aprobado:
 `PENDIENTE` → `EN_CAMINO` → `ENTREGADO`.
 
 **Criterio de aceptación:** `PATCH /api/v1/pedidos/{id}/estado` avanza

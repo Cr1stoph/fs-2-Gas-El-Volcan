@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consola de verificación · Gas El Volcán</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #0b1120; color: #e2e8f0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    .wrap { max-width: 1500px; margin: 0 auto; padding: 36px 40px 48px; }
+    header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; margin-bottom: 26px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .logo {
+      width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center;
+      background: linear-gradient(135deg, #f97316, #c2410c); font-size: 28px;
+      box-shadow: 0 10px 30px rgba(249,115,22,.25);
+    }
+    h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -.02em; }
+    .sub { margin: 0; color: #94a3b8; font-size: 14px; }
+    .pill { border: 1px solid #334155; background: #111c31; color: #cbd5e1; border-radius: 999px; padding: 9px 14px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin: 22px 0 28px; }
+    .stat { background: #111c31; border: 1px solid #24324a; border-radius: 16px; padding: 16px 18px; }
+    .stat .k { color: #94a3b8; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; }
+    .stat .v { font-size: 26px; font-weight: 900; margin-top: 6px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+    .card { background: #111c31; border: 1px solid #24324a; border-radius: 18px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,.22); }
+    .card-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid #24324a; background: #0f192c; }
+    .method { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 900; font-size: 12px; padding: 5px 9px; border-radius: 8px; letter-spacing: .04em; }
+    .GET { background: #052e2b; color: #5eead4; border: 1px solid #115e59; }
+    .POST { background: #172554; color: #93c5fd; border: 1px solid #1e40af; }
+    .PATCH { background: #3b2306; color: #fdba74; border: 1px solid #9a3412; }
+    .path { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: #e2e8f0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .status { margin-left: auto; font-family: ui-monospace, monospace; font-size: 12px; font-weight: 900; padding: 5px 9px; border-radius: 999px; white-space: nowrap; }
+    .ok { background: #052e16; color: #86efac; border: 1px solid #166534; }
+    .deny { background: #3f0d12; color: #fca5a5; border: 1px solid #991b1b; }
+    .pending { background: #3b2306; color: #fdba74; border: 1px solid #9a3412; }
+    .card-body { padding: 14px 16px 16px; }
+    .meta { display: flex; gap: 12px; flex-wrap: wrap; color: #94a3b8; font-size: 12px; margin-bottom: 10px; }
+    .meta b { color: #cbd5e1; }
+    pre { margin: 0; background: #0b1120; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; line-height: 1.55; color: #cbd5e1; max-height: 160px; overflow: hidden; white-space: pre-wrap; word-break: break-word; }
+    .note { margin-top: 10px; font-size: 12px; color: #94a3b8; }
+    .note strong { color: #e2e8f0; }
+    .foot { margin-top: 26px; color: #64748b; font-size: 12px; display: flex; justify-content: space-between; gap: 16px; }
+    .loading { color: #fdba74; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">🌋</div>
+        <div>
+          <h1>Consola de verificación de integración y seguridad</h1>
+          <p class="sub">Gas El Volcán · API REST <b>/api/v1</b> · Spring Boot + JWT + roles</p>
+        </div>
+      </div>
+      <span class="pill">Entorno local · http://localhost:8080</span>
+    </header>
+
+    <section class="summary">
+      <div class="stat"><div class="k">Pruebas ejecutadas</div><div class="v" id="total">—</div></div>
+      <div class="stat"><div class="k">Respuestas 2xx</div><div class="v" id="ok" style="color:#86efac">—</div></div>
+      <div class="stat"><div class="k">Bloqueos 401/403</div><div class="v" id="deny" style="color:#fca5a5">—</div></div>
+      <div class="stat"><div class="k">Tiempo total</div><div class="v" id="time" style="color:#fdba74">—</div></div>
+    </section>
+
+    <section class="grid" id="cards"></section>
+    <p class="loading" id="loading">Ejecutando solicitudes reales contra la API…</p>
+    <div class="foot">
+      <span>Evidencia generada automáticamente: cada tarjeta muestra el código HTTP y el cuerpo devuelto por el backend.</span>
+      <span>JWT enmascarado por seguridad</span>
+    </div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:8080/api/v1';
+    const cards = document.getElementById('cards');
+    const tests = [];
+    let admin, vendor, client;
+
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    async function req(method, path, { token, body } = {}) {
+      const started = performance.now();
+      const headers = {};
+      if (body !== undefined) headers['Content-Type'] = 'application/json';
+      if (token) headers.Authorization = `Bearer ${token}`;
+      let response, text;
+      try {
+        response = await fetch(API + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+        text = await response.text();
+      } catch (error) {
+        return { method, path, status: 0, ms: performance.now() - started, body: String(error) };
+      }
+      let parsed = text;
+      try { parsed = JSON.parse(text); } catch { /* texto plano */ }
+      return { method, path, status: response.status, ms: performance.now() - started, body: parsed };
+    }
+
+    function mask(value) {
+      if (!value || typeof value !== 'object') return value;
+      if (Array.isArray(value)) return value.slice(0, 3).map(mask);
+      const copy = { ...value };
+      if (copy.token) copy.token = String(copy.token).slice(0, 22) + '… (JWT enmascarado)';
+      if (copy.password) copy.password = '••••••••';
+      return copy;
+    }
+
+    function render(t) {
+      const card = document.createElement('article');
+      card.className = 'card';
+      const ok = t.status >= 200 && t.status < 300;
+      const statusClass = ok ? 'ok' : (t.status === 401 || t.status === 403 ? 'deny' : 'pending');
+      const statusText = t.status === 0 ? 'ERROR DE RED' : `${t.status} ${t.statusText || ''}`.trim();
+      const body = typeof t.body === 'string' ? t.body : JSON.stringify(mask(t.body), null, 2);
+      card.innerHTML = `
+        <div class="card-head">
+          <span class="method ${t.method}">${t.method}</span>
+          <span class="path">${t.path}</span>
+          <span class="status ${statusClass}">${statusText}</span>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span><b>Rol:</b> ${t.role}</span><span><b>Tiempo:</b> ${Math.round(t.ms)} ms</span><span><b>Resultado:</b> ${ok ? 'Permitido' : 'Bloqueado / error controlado'}</span></div>
+          <pre>${body.replace(/[<>&]/g, (c) => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</pre>
+          <p class="note"><strong>${t.title}</strong> — ${t.note}</p>
+        </div>`;
+      cards.appendChild(card);
+      tests.push(t);
+      document.getElementById('total').textContent = tests.length;
+      document.getElementById('ok').textContent = tests.filter((x) => x.status >= 200 && x.status < 300).length;
+      document.getElementById('deny').textContent = tests.filter((x) => x.status === 401 || x.status === 403).length;
+      document.getElementById('time').textContent = Math.round(tests.reduce((a, x) => a + x.ms, 0)) + ' ms';
+    }
+
+    async function run() {
+      const login = async (email, password) => {
+        const r = await req('POST', '/auth/login', { body: { email, password } });
+        return r.body?.token;
+      };
+
+      admin = await login('admin@gasvolcan.cl', 'admin123');
+      vendor = await login('vendedor@gasvolcan.cl', 'vendedor123');
+      client = await login('cliente@gasvolcan.cl', 'cliente123');
+
+      const orders = await req('GET', '/pedidos', { token: admin });
+      const pending = (orders.body || []).find((o) => o.estadoPago === 'APROBADO' && o.estado === 'PENDIENTE');
+      const orderId = pending?.id || (orders.body || [])[0]?.id;
+
+      const cases = [
+        { method: 'GET', path: '/productos', role: 'Público', title: 'Catálogo público', note: 'Cualquier visitante obtiene el listado sin token.' },
+        { method: 'POST', path: '/auth/login', role: 'Público', title: 'Login administrador', note: 'Credenciales válidas; se emite un JWT con el rol ADMIN.', body: { email: 'admin@gasvolcan.cl', password: 'admin123' } },
+        { method: 'GET', path: '/auth/me', role: 'ADMIN', token: admin, title: 'Sesión vigente', note: 'El frontend valida el token al recargar la página.' },
+        { method: 'GET', path: '/pedidos', role: 'CLIENTE', token: client, title: 'Cliente no puede ver todos los pedidos', note: 'La matriz de roles devuelve 403 antes de ejecutar el controlador.' },
+        { method: 'GET', path: '/pedidos', role: 'VENDEDOR', token: vendor, title: 'Vendedor consulta pedidos', note: 'Acceso de solo lectura a boletas y catálogo.' },
+        { method: 'PATCH', path: `/pedidos/${orderId}/estado`, role: 'VENDEDOR', token: vendor, title: 'Vendedor no puede cambiar estados', note: 'El cambio de estado es exclusivo del administrador.' },
+        { method: 'POST', path: '/productos', role: 'VENDEDOR', token: vendor, body: { nombre: 'Prueba', precio: 1000, stock: 1, categoria: 'Cilindros' }, title: 'Vendedor no puede crear productos', note: 'La escritura del catálogo está restringida a ADMIN.' },
+        { method: 'PATCH', path: `/pedidos/${orderId}/estado`, role: 'ADMIN', token: admin, title: 'Administrador avanza el pedido', note: 'PENDIENTE → EN_CAMINO; la transición queda persistida en la base de datos.' },
+      ];
+
+      for (const c of cases) {
+        const r = await req(c.method, c.path, { token: c.token, body: c.body });
+        r.role = c.role; r.title = c.title; r.note = c.note;
+        r.statusText = r.status === 200 ? 'OK' : r.status === 201 ? 'Created' : r.status === 401 ? 'Unauthorized' : r.status === 403 ? 'Forbidden' : '';
+        render(r);
+        await wait(120);
+      }
+      document.getElementById('loading').remove();
+      document.body.dataset.done = 'true';
+    }
+
+    run();
+  </script>
+</body>
+</html>

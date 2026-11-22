@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { obtenerPedido } from '../data/api';
+import { etiquetaEstado, etiquetaPago } from '../data/estados';
 
 export function VendedorPedidoDetallePage() {
   const { id } = useParams();
@@ -32,7 +33,16 @@ export function VendedorPedidoDetallePage() {
           <p>Subtotal: ${Number(pedido.subtotal).toLocaleString('es-CL')}</p>
           <p>Despacho: ${Number(pedido.despacho).toLocaleString('es-CL')}</p>
           <p className="mb-4 text-xl font-extrabold text-orange-700">Total: ${Number(pedido.total).toLocaleString('es-CL')}</p>
-          <p>Pago: {pedido.estadoPago} · Estado: {pedido.estado}</p>
+          <p className="flex flex-wrap items-center gap-2">
+            Pago:
+            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiquetaPago(pedido.estadoPago).clase}`}>
+              {etiquetaPago(pedido.estadoPago).texto}
+            </span>
+            · Estado:
+            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiquetaEstado(pedido.estado).clase}`}>
+              {etiquetaEstado(pedido.estado).texto}
+            </span>
+          </p>
           <Link to="/vendedor/pedidos" className="mt-4 inline-block text-orange-700 underline">Volver al listado</Link>
         </article>
       )}

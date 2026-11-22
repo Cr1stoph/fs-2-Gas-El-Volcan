@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { obtenerPedidos } from '../data/api';
+import { etiquetaEstado, etiquetaPago } from '../data/estados';
 
 export function VendedorPedidosPage() {
   const [pedidos, setPedidos] = useState([]);
@@ -28,8 +29,16 @@ export function VendedorPedidosPage() {
                 <td><strong>#{pedido.id}</strong></td>
                 <td>{pedido.clienteNombre}</td>
                 <td>${Number(pedido.total).toLocaleString('es-CL')}</td>
-                <td>{pedido.estadoPago}</td>
-                <td>{pedido.estado}</td>
+                <td>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiquetaPago(pedido.estadoPago).clase}`}>
+                    {etiquetaPago(pedido.estadoPago).texto}
+                  </span>
+                </td>
+                <td>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${etiquetaEstado(pedido.estado).clase}`}>
+                    {etiquetaEstado(pedido.estado).texto}
+                  </span>
+                </td>
                 <td><Link className="text-orange-700 underline" to={`/vendedor/pedidos/${pedido.id}`}>Ver detalle</Link></td>
               </tr>
             ))}
