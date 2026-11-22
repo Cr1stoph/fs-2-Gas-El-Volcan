@@ -42,10 +42,6 @@ export function LoginPage() {
           </button>
         </form>
         {error && <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800" role="alert">{error}</p>}
-        <p className="mt-3 text-center text-xs text-gray-500">
-          Usa las credenciales creadas en el backend. El usuario administrador inicial es
-          `admin@gasvolcan.cl` con contraseña `admin123`.
-        </p>
 
         <div className="mt-6 pt-6 border-t border-gray-100 text-center">
           <p className="text-sm text-gray-600 mb-3">¿Aún no tienes una cuenta?</p>

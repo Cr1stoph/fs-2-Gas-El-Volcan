@@ -10,7 +10,7 @@
 React / Vite (EC2 frontend)
         │
         │  fetch() con Authorization: Bearer <JWT>
-        │  VITE_API_URL = /api  →  Nginx proxy_pass
+        │  VITE_API_URL = /api/v1  →  Nginx proxy_pass
         ▼
 Nginx (EC2 frontend, puerto 80)
         │
@@ -112,6 +112,20 @@ Autentica al usuario y devuelve un JWT.
 Renueva el JWT sin re-autenticar. Requiere el token actual en el header `Authorization`.
 
 **Response `200 OK`:** mismo formato que `/login` con un nuevo token (firma diferente).
+
+---
+
+### GET `/api/v1/auth/me` — Autenticado
+
+Devuelve los datos del usuario dueño del token. El frontend lo usa al recargar
+la página para validar que la sesión persistida siga vigente.
+
+**Response `200 OK`:**
+```json
+{ "id": 1, "username": "admin", "email": "admin@gasvolcan.cl", "role": "ROLE_ADMIN" }
+```
+
+**`401 Unauthorized`** si el token es inválido o expiró.
 
 ---
 
@@ -229,9 +243,17 @@ Devuelve un pedido por ID.
 
 ---
 
-### POST `/api/v1/pedidos` — Autenticado (cualquier rol)
+### GET `/api/v1/pedidos/mios` — ROLE_ADMIN, ROLE_VENDEDOR, ROLE_CLIENTE
 
-Crea un nuevo pedido.
+Lista únicamente los pedidos del usuario autenticado. Es la consulta que usa
+el cliente para revisar sus boletas.
+
+---
+
+### POST `/api/v1/pedidos` — ROLE_ADMIN y ROLE_CLIENTE
+
+Crea un nuevo pedido. El backend recalcula subtotal, despacho y total, y
+descuenta el stock. `ROLE_VENDEDOR` no puede crear pedidos.
 
 **Request body:**
 ```json
@@ -252,15 +274,47 @@ Crea un nuevo pedido.
 
 ---
 
-### PATCH `/api/v1/pedidos/{id}/estado` — ROLE_ADMIN y ROLE_VENDEDOR
+### PUT `/api/v1/pedidos/{id}` — Solo ROLE_ADMIN
+
+Actualiza los datos del pedido (incluido el estado). Body igual a POST.
+
+---
+
+### PATCH `/api/v1/pedidos/{id}/estado` — Solo ROLE_ADMIN
 
 Avanza el estado del pedido un paso:
 - `PENDIENTE` → `EN_CAMINO`
 - `EN_CAMINO` → `ENTREGADO`
 
-Solo funciona si `estadoPago === 'APROBADO'`.
+Solo funciona si `estadoPago === 'APROBADO'`. `ROLE_VENDEDOR` tiene acceso de
+sólo lectura a pedidos: no puede avanzar estados.
 
 **Response `200 OK`:** pedido con el nuevo estado.
+
+---
+
+### DELETE `/api/v1/pedidos/{id}` — Solo ROLE_ADMIN
+
+Elimina el pedido.
+
+**Response `204 No Content`:** sin body.
+
+---
+
+## 5.1 Administración (solo ROLE_ADMIN)
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/api/v1/usuarios` | Lista usuarios |
+| POST | `/api/v1/usuarios` | Crea usuario con rol |
+| PUT | `/api/v1/usuarios/{id}` | Actualiza usuario/rol |
+| DELETE | `/api/v1/usuarios/{id}` | Elimina usuario |
+| GET | `/api/v1/categorias` | Lista categorías |
+| POST | `/api/v1/categorias` | Crea categoría |
+| PUT | `/api/v1/categorias/{id}` | Actualiza categoría |
+| DELETE | `/api/v1/categorias/{id}` | Elimina categoría |
+
+Cualquier otro método o ruta devuelve `403 Forbidden` (`anyRequest().denyAll()`).
 
 ---
 
@@ -271,15 +325,20 @@ Solo funciona si `estadoPago === 'APROBADO'`.
 | POST | `/api/v1/auth/register` | ❌ No | — |
 | POST | `/api/v1/auth/login` | ❌ No | — |
 | POST | `/api/v1/auth/refresh` | ✅ JWT | Cualquiera |
+| GET | `/api/v1/auth/me` | ✅ JWT | Cualquiera |
 | GET | `/api/v1/productos` | ❌ No | — |
 | GET | `/api/v1/productos/{id}` | ❌ No | — |
 | POST | `/api/v1/productos` | ✅ JWT | ADMIN |
 | PUT | `/api/v1/productos/{id}` | ✅ JWT | ADMIN |
 | DELETE | `/api/v1/productos/{id}` | ✅ JWT | ADMIN |
 | GET | `/api/v1/pedidos` | ✅ JWT | ADMIN, VENDEDOR |
-| GET | `/api/v1/pedidos/{id}` | ✅ JWT | ADMIN, VENDEDOR |
-| POST | `/api/v1/pedidos` | ✅ JWT | Cualquiera autenticado |
-| PATCH | `/api/v1/pedidos/{id}/estado` | ✅ JWT | ADMIN, VENDEDOR |
+| GET | `/api/v1/pedidos/mios` | ✅ JWT | ADMIN, VENDEDOR, CLIENTE (solo los suyos) |
+| GET | `/api/v1/pedidos/{id}` | ✅ JWT | ADMIN, VENDEDOR, CLIENTE (solo los suyos) |
+| POST | `/api/v1/pedidos` | ✅ JWT | ADMIN, CLIENTE |
+| PUT | `/api/v1/pedidos/{id}` | ✅ JWT | ADMIN |
+| PATCH | `/api/v1/pedidos/{id}/estado` | ✅ JWT | ADMIN |
+| DELETE | `/api/v1/pedidos/{id}` | ✅ JWT | ADMIN |
+| GET/POST/PUT/DELETE | `/api/v1/usuarios/**`, `/api/v1/categorias/**` | ✅ JWT | ADMIN |
 | GET | `/actuator/health` | ❌ No | — |
 | GET | `/swagger-ui.html` | ❌ No | — |
 
@@ -306,14 +365,18 @@ Solo funciona si `estadoPago === 'APROBADO'`.
 
 ```js
 // src/data/api.js
-const API_BASE = import.meta.env.VITE_API_URL ?? '/api';
+// normalizarBase() garantiza que cualquier valor termine en /api/v1
+export const API_BASE = normalizarBase(import.meta.env.VITE_API_URL);
 ```
 
 | Entorno | `VITE_API_URL` | Resultado |
 |---------|---------------|-----------|
-| Desarrollo local | `http://localhost:8080/api` | Llama directo al backend local |
-| EC2 frontend | `/api` | Nginx hace proxy al backend |
-| GitHub Pages (fallback) | `https://nip.io/api` | No recomendado (Mixed Content) |
+| Desarrollo local | `http://localhost:8080/api/v1` | Llama directo al backend local |
+| EC2 frontend | `/api/v1` | Nginx hace proxy al backend |
+| GitHub Pages (fallback) | `https://nip.io/api/v1` | No recomendado (Mixed Content) |
+
+También se aceptan `http://localhost:8080` y `http://localhost:8080/api`:
+ambos se normalizan a `http://localhost:8080/api/v1`.
 
 ### Flujo de autenticación en el frontend
 
@@ -328,29 +391,47 @@ const API_BASE = import.meta.env.VITE_API_URL ?? '/api';
    Authorization: Bearer <token>
 6. Header reacciona al evento 'gas-volcan:auth-changed'
    y muestra el nombre del usuario y el botón de su panel
+ 7. Al recargar, AuthProvider valida GET /api/v1/auth/me; si el JWT
+    expiró (claim exp) o el backend lo rechaza, se cierra la sesión
 ```
 
 ### Función `request()` en `api.js`
 
 ```js
 async function request(path, options = {}) {
+  const { sinAuth = false, ...config } = options;
   const token = localStorage.getItem('gas-volcan:access-token');
-  const response = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
+  const headers = new Headers(config.headers);
+  if (config.body != null) headers.set('Content-Type', 'application/json');
+  if (token && !sinAuth) headers.set('Authorization', `Bearer ${token}`);
+
+  let response;
+  try {
+    response = await fetch(`${API_BASE}${path}`, { ...config, headers });
+  } catch {
+    throw new ApiError('No fue posible conectar con el servidor.', 0);
+  }
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
-    throw new Error(body.message ?? `Error ${response.status}`);
+    if (response.status === 401 && !sinAuth) cerrarSesion();
+    throw new ApiError(body?.message ?? `La API respondió con estado ${response.status}.`, response.status);
   }
   if (response.status === 204) return null;
-  return response.json();
+  const texto = await response.text();
+  return texto ? JSON.parse(texto) : null;
 }
 ```
+
+### Rutas y menús por rol en el frontend
+
+| Rol | Rutas permitidas | Menú |
+|-----|------------------|------|
+| `ROLE_ADMIN` | `/admin`, `/admin/usuarios`, `/admin/categorias`, tienda y pedidos | Panel admin + tienda |
+| `ROLE_VENDEDOR` | `/vendedor`, `/vendedor/productos/:id`, `/vendedor/pedidos/:id` | Panel vendedor (sólo consulta) |
+| `ROLE_CLIENTE` | tienda, `/checkout`, `/mis-pedidos` | Tienda + carrito |
+
+`ProtectedRoute` y `StoreRoute` aplican la matriz en el enrutador;
+`VendedorPage` y sus detalle no exponen acciones de escritura ni cambio de estado.
 
 ---
 

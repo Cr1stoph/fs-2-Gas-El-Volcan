@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import cilindroImagen from '../assets/cilindro.svg';
 import reguladorImagen from '../assets/regulador.svg';
 import flexibleImagen from '../assets/flexible.svg';
@@ -26,6 +27,7 @@ function obtenerImagen(categoria, nombre) {
 }
 
 export function AdminPage() {
+  const { esAdmin } = useAuth();
   const [productos, setProductos] = useState([]);
   const [pedidos, setPedidos] = useState([]);
   const [formulario, setFormulario] = useState(formularioVacio);
@@ -52,10 +54,12 @@ export function AdminPage() {
 
   const guardarProducto = async (event) => {
     event.preventDefault();
+    setError('');
+    setMensaje('');
     const precio = Number(formulario.precio);
     const precioOferta = formulario.precioOferta ? Number(formulario.precioOferta) : null;
     if (precioOferta && precioOferta >= precio) {
-      setMensaje('El precio de oferta debe ser menor al precio normal.');
+      setError('El precio de oferta debe ser menor al precio normal.');
       return;
     }
 
@@ -67,16 +71,20 @@ export function AdminPage() {
       categoria: formulario.categoria,
       img: obtenerImagen(formulario.categoria, formulario.nombre),
     };
-    if (productoEditando !== null) {
-      await actualizarProducto(productoEditando, datos);
-      setMensaje('Producto actualizado correctamente.');
-    } else {
-      await crearProducto(datos);
-      setMensaje('Producto agregado correctamente.');
+    try {
+      if (productoEditando !== null) {
+        await actualizarProducto(productoEditando, datos);
+        setMensaje('Producto actualizado correctamente.');
+      } else {
+        await crearProducto(datos);
+        setMensaje('Producto agregado correctamente.');
+      }
+      setProductos(await obtenerProductos());
+      setFormulario(formularioVacio);
+      setProductoEditando(null);
+    } catch (exception) {
+      setError(exception.message);
     }
-    setProductos(await obtenerProductos());
-    setFormulario(formularioVacio);
-    setProductoEditando(null);
   };
 
   const editarProducto = (producto) => {
@@ -93,14 +101,24 @@ export function AdminPage() {
 
   const quitarProducto = async (producto) => {
     if (!window.confirm(`¿Eliminar ${producto.nombre} del catálogo?`)) return;
-    await eliminarProducto(producto.id);
-    setProductos(await obtenerProductos());
-    setMensaje('Producto eliminado del catálogo.');
+    setError('');
+    try {
+      await eliminarProducto(producto.id);
+      setProductos(await obtenerProductos());
+      setMensaje('Producto eliminado del catálogo.');
+    } catch (exception) {
+      setError(exception.message);
+    }
   };
 
   const cambiarEstadoPedido = async (pedido) => {
-    await avanzarPedido(pedido.id);
-    setPedidos(await obtenerPedidos());
+    setError('');
+    try {
+      await avanzarPedido(pedido.id);
+      setPedidos(await obtenerPedidos());
+    } catch (exception) {
+      setError(exception.message);
+    }
   };
 
   const cancelarEdicion = () => {
@@ -108,6 +126,10 @@ export function AdminPage() {
     setProductoEditando(null);
     setMensaje('');
   };
+
+  // Doble barrera: ProtectedRoute ya filtra por rol, esto evita renderizar el panel
+  // si la sesión cambia mientras la página está montada.
+  if (!esAdmin) return null;
 
   return (
     <main className="mx-auto page-content flex-grow px-3 py-5">

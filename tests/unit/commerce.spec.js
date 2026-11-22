@@ -21,7 +21,17 @@ import {
   updateProducto,
 } from '../../src/data/mockDb';
 import { guardarPerfilCliente, getPerfilCliente } from '../../src/data/profile';
-import { getSesionDemo, iniciarSesionDemo } from '../../src/data/demoAuth';
+import {
+  cerrarSesion,
+  getSesion,
+  guardarSesion,
+  tokenValido,
+} from '../../src/data/api';
+
+function jwtConExpiracion(exp) {
+  const payload = btoa(JSON.stringify({ exp }));
+  return `header.${payload}.firma`;
+}
 
 const checkoutValido = {
   nombre: 'Ana Pérez',
@@ -173,24 +183,64 @@ describe('Perfil de compra', () => {
   });
 });
 
-describe('Inicio de sesión de demostración', () => {
-  beforeEach(() => sessionStorage.clear());
+describe('Sesión persistente con JWT', () => {
+  const expFuturo = Math.floor(Date.now() / 1000) + 3600;
 
-  it('dirige la cuenta administradora a un rol separado', () => {
-    expect(iniciarSesionDemo(' Admin@Gmail.com ')).toEqual({
-      correo: 'admin@gmail.com',
-      rol: 'admin',
+  beforeEach(() => localStorage.clear());
+
+  it('guarda la sesión, normaliza el rol y la restaura desde localStorage', () => {
+    guardarSesion({
+      token: jwtConExpiracion(expFuturo),
+      email: 'admin@gasvolcan.cl',
+      username: 'Administrador',
+      role: 'ADMIN',
     });
-    expect(getSesionDemo().rol).toBe('admin');
+
+    expect(tokenValido(localStorage.getItem('gas-volcan:access-token'))).toBeTrue();
+    expect(getSesion()).toEqual(jasmine.objectContaining({
+      correo: 'admin@gasvolcan.cl',
+      nombre: 'Administrador',
+      rol: 'ROLE_ADMIN',
+      role: 'ROLE_ADMIN',
+    }));
   });
 
-  it('clasifica el resto de correos como clientes', () => {
-    expect(iniciarSesionDemo('cliente@gmail.com').rol).toBe('cliente');
-    expect(getSesionDemo().correo).toBe('cliente@gmail.com');
+  it('respeta roles ya prefijados con ROLE_', () => {
+    guardarSesion({
+      token: jwtConExpiracion(expFuturo),
+      correo: 'vendedor@gasvolcan.cl',
+      nombre: 'Vendedor',
+      rol: 'ROLE_VENDEDOR',
+    });
+
+    expect(getSesion().rol).toBe('ROLE_VENDEDOR');
   });
 
-  it('no crea sesión si no se ha iniciado sesión', () => {
-    expect(getSesionDemo()).toBeNull();
+  it('descarta una sesión cuyo token JWT está expirado', () => {
+    guardarSesion({
+      token: jwtConExpiracion(Math.floor(Date.now() / 1000) - 60),
+      correo: 'cliente@gasvolcan.cl',
+      nombre: 'Cliente',
+      rol: 'CLIENTE',
+    });
+
+    expect(getSesion()).toBeNull();
+    expect(localStorage.getItem('gas-volcan:access-token')).toBeNull();
+    expect(localStorage.getItem('gas-volcan:session')).toBeNull();
+  });
+
+  it('no crea sesión si nunca se inició sesión y cierra la sesión activa', () => {
+    expect(getSesion()).toBeNull();
+
+    guardarSesion({
+      token: jwtConExpiracion(expFuturo),
+      correo: 'cliente@gasvolcan.cl',
+      nombre: 'Cliente',
+      rol: 'CLIENTE',
+    });
+    cerrarSesion();
+
+    expect(getSesion()).toBeNull();
   });
 });
 

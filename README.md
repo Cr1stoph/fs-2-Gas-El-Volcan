@@ -19,7 +19,7 @@ npm run dev
 ```
 
 El frontend consume el backend mediante `VITE_API_URL`, cuyo valor local por
-defecto es `http://localhost:8080/api`. Para producción se debe cambiar por la
+defecto es `http://localhost:8080/api/v1`. Para producción se debe cambiar por la
 URL pública del backend en EC2.
 
 ## Comprobaciones
@@ -75,8 +75,9 @@ configuración del repositorio, Pages debe usar **GitHub Actions** como fuente
 de publicación. Vite configura la ruta base del repositorio y `404.html`
 permite abrir directamente las rutas internas de la aplicación.
 Para producción, configura el secreto `VITE_API_URL` del repositorio con la
-URL pública del backend, por ejemplo `http://IP_PUBLICA_EC2:8080/api` o,
-preferentemente, una URL HTTPS detrás de un reverse proxy.
+URL pública del backend, por ejemplo `http://IP_PUBLICA_EC2:8080/api/v1` o,
+preferentemente, una URL HTTPS detrás de un reverse proxy. El frontend
+normaliza el valor para que siempre termine en `/api/v1`.
 
 ## Estructura de `src`
 
@@ -91,9 +92,12 @@ preferentemente, una URL HTTPS detrás de un reverse proxy.
 - `hooks/`: lógica de interacción reutilizable.
 - `assets/`: recursos visuales importados desde React.
 
-Los productos, pedidos, perfiles y carrito usan almacenamiento local del
-navegador. Las rutas públicas se agregan como hijas de `PublicLayout` en
-`App.jsx`; la ruta `/admin` usa el marco compartido de la tienda.
+El carrito y el perfil de compra usan almacenamiento local del navegador. El
+token JWT y la sesión se conservan en `localStorage` y se validan contra
+`GET /api/v1/auth/me` al recargar la página; cuando expira, la sesión se cierra
+automáticamente. Productos, pedidos y usuarios se guardan en la base de datos
+del backend. Las rutas públicas se agregan como hijas de `PublicLayout` en
+`App.jsx`; `/admin` y `/vendedor` tienen layouts y guards propios por rol.
 
 ## Documentación de evaluación
 
