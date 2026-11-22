@@ -4,7 +4,6 @@ import cilindroImagen from '../assets/cilindro.svg';
 import reguladorImagen from '../assets/regulador.svg';
 import flexibleImagen from '../assets/flexible.svg';
 import {
-  avanzarPedido,
   obtenerPedidos,
   obtenerProductos,
   getSesion,
@@ -43,15 +42,6 @@ export function VendedorPage() {
   const pedidosActivos = pedidos.filter(
     (p) => p.estadoPago === 'APROBADO' && p.estado !== 'ENTREGADO',
   ).length;
-
-  const avanzar = async (pedido) => {
-    try {
-      await avanzarPedido(pedido.id);
-      setPedidos(await obtenerPedidos());
-    } catch (e) {
-      setError(e.message);
-    }
-  };
 
   return (
     <main className="mx-auto page-content flex-grow px-3 py-5">
@@ -122,7 +112,7 @@ export function VendedorPage() {
           </p>
           <h2 className="mb-1 text-2xl font-extrabold">Pedidos recibidos</h2>
           <p className="mb-0 text-sm text-gray-600">
-            Avanza el estado de los pedidos con pago aprobado.
+            Consulta los pedidos recibidos. La gestión de estados corresponde al administrador.
           </p>
         </div>
 
@@ -185,26 +175,12 @@ export function VendedorPage() {
                         </span>
                       </td>
                       <td>
-                        {pedido.estadoPago === 'APROBADO' &&
-                        pedido.estado !== 'ENTREGADO' ? (
-                          <button
-                            type="button"
-                            onClick={() => avanzar(pedido)}
-                            className="inline-flex items-center justify-center rounded border border-orange-600 bg-transparent px-2 py-1 text-sm text-orange-600 transition hover:bg-orange-600 hover:text-white"
-                          >
-                            {pedido.estado === 'PENDIENTE'
-                              ? 'Despachar'
-                              : 'Marcar entregado'}
-                          </button>
-                        ) : pedido.estado === 'ENTREGADO' ? (
-                          <span className="text-sm text-green-700 font-semibold">
-                            Completado
-                          </span>
-                        ) : (
-                          <span className="text-sm text-gray-400">
-                            Sin acción
-                          </span>
-                        )}
+                        <Link
+                          to={`/vendedor/pedidos/${pedido.id}`}
+                          className="inline-flex items-center justify-center rounded border border-orange-600 bg-transparent px-2 py-1 text-sm text-orange-600 transition hover:bg-orange-600 hover:text-white"
+                        >
+                          Ver detalle
+                        </Link>
                       </td>
                     </tr>
                   );
@@ -242,6 +218,7 @@ export function VendedorPage() {
                   <th>Precio</th>
                   <th>Oferta</th>
                   <th>Stock</th>
+                  <th>Detalle</th>
                 </tr>
               </thead>
               <tbody>
@@ -263,6 +240,14 @@ export function VendedorPage() {
                         : '—'}
                     </td>
                     <td>{producto.stock}</td>
+                    <td>
+                      <Link
+                        to={`/vendedor/productos/${producto.id}`}
+                        className="text-sm font-semibold text-orange-600 hover:underline"
+                      >
+                        Ver
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>

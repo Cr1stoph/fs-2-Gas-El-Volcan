@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { iniciarSesionDemo } from '../data/demoAuth';
+import { useAuth } from './useAuth';
 
 export function useLogin() {
   const navigate = useNavigate();
-
+  const { iniciarSesion } = useAuth();
   const [error, setError] = useState('');
 
   const handleLoginSubmit = async (e) => {
@@ -12,10 +12,14 @@ export function useLogin() {
     const formulario = new FormData(e.currentTarget);
     setError('');
     try {
-      const sesion = await iniciarSesionDemo(formulario.get('correo'), formulario.get('password'));
-      if (sesion.role === 'ROLE_ADMIN') {
+      const sesion = await iniciarSesion(
+        formulario.get('correo'),
+        formulario.get('password'),
+      );
+      const rol = sesion?.rol ?? sesion?.role;
+      if (rol === 'ROLE_ADMIN') {
         navigate('/admin', { replace: true });
-      } else if (sesion.role === 'ROLE_VENDEDOR') {
+      } else if (rol === 'ROLE_VENDEDOR') {
         navigate('/vendedor', { replace: true });
       } else {
         navigate('/categorias', { replace: true });
