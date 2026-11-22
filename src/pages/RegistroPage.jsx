@@ -9,8 +9,12 @@ export function RegistroPage() {
 
   const registrarPerfil = async (event) => {
     event.preventDefault();
-    const formulario = new FormData(event.currentTarget);
+    // React reutiliza el evento sintético: guardamos la referencia al formulario
+    // antes de cualquier await, porque event.currentTarget se vuelve null.
+    const form = event.currentTarget;
+    const formulario = new FormData(form);
     setError('');
+    setGuardado(false);
     try {
       await registrarUsuario({
         username: formulario.get('username'),
@@ -23,7 +27,7 @@ export function RegistroPage() {
         telefono: formulario.get('telefono'),
       });
       setGuardado(true);
-      event.currentTarget.reset();
+      form.reset();
     } catch (exception) {
       setError(exception.message);
     }
@@ -34,8 +38,8 @@ export function RegistroPage() {
       <section className="w-full max-w-xl rounded-3xl border border-orange-100 bg-white p-5 shadow-xl md:p-8">
         <div className="mb-6 text-center">
           <span className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange-100 text-3xl text-orange-700" aria-hidden="true">👤</span>
-          <h1 className="mb-2 text-2xl font-extrabold text-gray-900">Crear perfil de compra</h1>
-          <p className="mb-0 text-sm text-gray-600">Guarda tus datos para completar más rápido el próximo pedido.</p>
+          <h1 className="mb-2 text-2xl font-extrabold text-gray-900">Crear cuenta de cliente</h1>
+          <p className="mb-0 text-sm text-gray-600">Regístrate para iniciar sesión y completar más rápido tus pedidos.</p>
         </div>
 
         <form onSubmit={registrarPerfil}>
@@ -63,10 +67,10 @@ export function RegistroPage() {
           {error && <p className="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-2 text-red-800" role="alert">{error}</p>}
           {guardado && (
             <p className="mb-4 rounded-md border border-emerald-200 bg-emerald-100 px-4 py-2 text-emerald-900" role="status">
-              Perfil guardado en este navegador. Tus datos se completarán en el checkout.
+              Cuenta creada y sesión iniciada. Tus datos se completarán en el checkout.
             </p>
           )}
-          <button type="submit" className="inline-flex w-full items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-2.5 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">Guardar perfil</button>
+          <button type="submit" className="inline-flex w-full items-center justify-center rounded-lg border border-orange-600 bg-orange-600 py-2.5 font-bold leading-6 text-white transition hover:bg-orange-700 active:bg-orange-800">Crear cuenta</button>
         </form>
 
         <div className="mt-5 border-t border-orange-100 pt-4 text-center text-sm">
